@@ -1,11 +1,14 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using System;
 using System.Diagnostics;
+using ThingLing.Avalonia.Controls;
 using ThingLing.Controls.Methods;
 using ThingLing.Controls.Props;
 
@@ -14,7 +17,6 @@ namespace ThingLing.Controls.InternalControls
     internal partial class FloatingWindow : UserControl
     {
         public string WindowName { get; set; }
-
         private DockControl _dockControl;
         DockingContextMenu dockingContextMenu = new();
         HideContextMenu hideContextMenu = new();
@@ -36,29 +38,19 @@ namespace ThingLing.Controls.InternalControls
             hideContextMenu.AutoHideBottomMenuItem.Click += HideBottom_Click;
             hideContextMenu.AutoHideRightMenuItem.Click += HideRight_Click;
 
-            TabControl = new TabControl(ThemeMethods.TabControlTheme())
+            TabControl = new TabControl()
             {
                 TabMode = TabMode.Window,
                 TabControlParent = this,
-                ParentPanel = _dockControl.MainPanel
+                ParentPanel = _dockControl.MainPanel,
+                Theme = ThemeMethods.TabControlTheme()
             };
 
             TabControl.DockingContextMenu = dockingContextMenu;
             TabControl.HideContextMenu = hideContextMenu;
 
-            TabControl.PointerPressed += Window_PointerPressed;
+            TabControl.PointerPressed += TabControl_PointerPressed;
             TabControlPanel.Children.Add(TabControl);
-            TabControl.TabItemRemoved += TabControl_TabItemRemoved;
-        }
-
-        private void TabControl_TabItemRemoved(TabItem obj)
-        {
-            //if (TabControl.TabItemsCount == 0)
-            //{
-            //    FloatingWindow_Unloaded();
-            //}
-
-            fghj
         }
 
         #region Controls
@@ -85,12 +77,12 @@ namespace ThingLing.Controls.InternalControls
 
         #endregion
 
-        private void FloatingWindow_Unloaded()
+        private void FloatingWindow_Unloaded(object sender, RoutedEventArgs e)
         {
             this.MainPanel.Children.Clear();
         }
 
-        private void MakeActive()
+        private async void MakeActive()
         {
             TabControl.SelectedTabItem.TabItemBody().TabItemHeader.Background = CurrentTheme.SelectedWindowHeadingBackground;
             TabControl.SelectedTabItem.TabItemBody().TabItemHeader.Header.Foreground = CurrentTheme.SelectedWindowHeadingForeground;
@@ -105,12 +97,12 @@ namespace ThingLing.Controls.InternalControls
             }
             catch (NullReferenceException ex)
             {
-                Console.WriteLine(ex.Message, "Error");
-                Debug.WriteLine(ex.Message);
+                var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+                await MessageBox.ShowAsync(desktop.MainWindow, ex.Message, "Error");
             }
         }
 
-        private void Window_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void TabControl_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             MakeActive();
         }
@@ -143,11 +135,11 @@ namespace ThingLing.Controls.InternalControls
                 ContentIcon = contentIcon
             };
 
-            tabItem.TabItemHeader().PointerPressed += Header_PointerPressed;
+            tabItem.TabItemHeader().PointerPressed += Header__PointerPressed;
             tabItem.TabItemHeader().PointerEnter += Header_PointerEnter;
             tabItem.TabItemBody().TabItemHeader.MenuButton.IsVisible = true;
             tabItem.TabItemBody().TabItemHeader.HideButton.IsVisible = true;
-            tabItem.TabItemBody().TabItemHeader.PointerPressed += Header_PointerPressed;
+            tabItem.TabItemBody().TabItemHeader.PointerPressed += Header__PointerPressed;
             this.LostFocus += (sender, e) =>
             {
                 tabItem.TabItemHeader().Background = CurrentTheme.UnSelectedWindowHeadingBackground;
@@ -217,31 +209,31 @@ namespace ThingLing.Controls.InternalControls
             Bottom = 4
         }
 
-        private void LeftBorder_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void LeftBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Left;
             Set_Sizing();
         }
 
-        private void TopBorder_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void TopBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Top;
             Set_Sizing();
         }
 
-        private void RightBorder_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void RightBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Right;
             Set_Sizing();
         }
 
-        private void BottomBorder_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void BottomBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Bottom;
             Set_Sizing();
         }
 
-        private void Header_PointerPressed(object sender, PointerPressedEventArgs e)
+        private void Header__PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             //-------------< set_Sizing() >------------- 
             var offset = e.GetPosition(HeaderBorder);
@@ -275,41 +267,40 @@ namespace ThingLing.Controls.InternalControls
         #region Region: Cursor enter leave
 
         //----< ENTER >---- 
-        private void LeftBorder_MouseEnter(object sender, PointerEventArgs e)
+        private void LeftBorder_PointerEnter(object? sender, PointerEventArgs e)
         {
-            Cursor = Cursors.SizeWE;
+            Cursor = new Cursor(StandardCursorType.SizeWestEast);
         }
 
-        private void TopBorder_MouseEnter(object sender, PointerEventArgs e)
+        private void TopBorder_PointerEnter(object? sender, PointerEventArgs e)
         {
-            Cursor = Cursors.SizeNS;
+            Cursor = new Cursor(StandardCursorType.SizeNorthSouth);
         }
 
-        private void RightBorder_MouseEnter(object sender, PointerEventArgs e)
+        private void RightBorder_PointerEnter(object? sender, PointerEventArgs e)
         {
-            Cursor = Cursors.SizeWE;
+            Cursor = new Cursor(StandardCursorType.SizeWestEast);
         }
 
-        private void BottomBorder_PointerEnter(object sender, PointerEventArgs e)
+        private void BottomBorder_PointerEnter(object? sender, PointerEventArgs e)
         {
-            Cursor = Cursors.SizeNS;
+            Cursor = new Cursor(StandardCursorType.SizeNorthSouth);
         }
 
-        private void Header_PointerEnter(object sender, PointerEventArgs e)
+        private void Header_PointerEnter(object? sender, PointerEventArgs e)
         {
-            Cursor = Cursors.Arrow;
+            Cursor = new Cursor(StandardCursorType.Arrow);
         }
 
-        private void Header_PointerLeave(object sender, PointerEventArgs e)
+        private void Header_PointerLeave(object? sender, PointerEventArgs e)
         {
-            Cursor = Cursors.Arrow;
+            Cursor = new Cursor(StandardCursorType.Arrow);
         }
         //----</ ENTER >---- 
 
         #endregion cursor: enter leave
 
         #endregion Window drag and resize
-
 
     }
 }
