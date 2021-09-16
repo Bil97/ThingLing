@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ThingLing.WPF.Controls.DockControl\ThingLing.WPF.Controls.DockControl.csproj">
+      <Project>{ac263632-465f-495f-97e0-1f5a817b19e4}</Project>
+      <Name>ThingLing.WPF.Controls.DockControl</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
