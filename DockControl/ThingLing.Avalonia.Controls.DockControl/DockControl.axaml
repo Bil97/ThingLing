@@ -7,7 +7,7 @@
              x:Class="ThingLing.Controls.DockControl"
              Initialized="UserControl_Initialized"
              >
-  <Canvas x:Name="MainPanel" PointerMoved="MainPanel_PointerMoved">
+  <Canvas x:Name="MainPanel" PointerMoved="MainPanel_PointerMoved" Background="Red">
     <controls:ContentControl x:Name="ContentControl"
                              Height="{Binding ElementName=MainPanel, Path=Height}"
                              Width="{Binding ElementName=MainPanel, Path=Width}" 

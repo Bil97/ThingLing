@@ -6,17 +6,17 @@
              x:Class="ThingLing.Controls.InternalControls.HideContextMenu">
   <MenuItem x:Name="AutoHideLeftMenuItem" Header="AutoHide Left">
     <MenuItem.Icon>
-      <Image Source="avares://ThingLing.Controls./Images/auto_hide_left.png" />
+      <Image Source="avares://ThingLing.Controls.DockControl/Images/auto_hide_left.png" />
     </MenuItem.Icon>
   </MenuItem>
   <MenuItem x:Name="AutoHideRightMenuItem" Header="AutoHide Right">
     <MenuItem.Icon>
-      <Image Source="avares://ThingLing.Controls./Images/auto_hide_right.png" />
+      <Image Source="avares://ThingLing.Controls.DockControl/Images/auto_hide_right.png" />
     </MenuItem.Icon>
   </MenuItem>
   <MenuItem x:Name="AutoHideBottomMenuItem" Header="AutoHide Bottom">
     <MenuItem.Icon>
-      <Image Source="avares://ThingLing.Controls./Images/auto_hide_bottom.png" />
+      <Image Source="avares://ThingLing.Controls.DockControl/Images/auto_hide_bottom.png" />
     </MenuItem.Icon>
   </MenuItem>
 </ContextMenu>
