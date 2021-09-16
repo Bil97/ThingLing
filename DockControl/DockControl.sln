@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingLing.WPF.Controls.DockControl", "ThingLing.WPF.Controls.DockControl\ThingLing.WPF.Controls.DockControl.csproj", "{AC263632-465F-495F-97E0-1F5A817B19E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfTestApp", "WpfTestApp\WpfTestApp.csproj", "{1E669EF8-E13C-4543-AB89-46C8D51A69EE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingLing.WPF.Controls.TabControl", "..\TabControl\ThingLing.WPF.Controls.TabControl\ThingLing.WPF.Controls.TabControl.csproj", "{81D411FB-18CF-49F1-922E-A498F06F997F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingLing.Avalonia.Controls.TabControl", "..\TabControl\ThingLing.Avalonia.Controls.TabControl\ThingLing.Avalonia.Controls.TabControl.csproj", "{F42F8FA6-2112-4575-B24F-BD31CE37E328}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingLing.Avalonia.Controls.DockControl", "ThingLing.Avalonia.Controls.DockControl\ThingLing.Avalonia.Controls.DockControl.csproj", "{DA7D03E8-E61F-4DF4-960B-8022875B7B78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTestApp2", "WpfTestApp2\WpfTestApp2.csproj", "{69225B24-9AAE-4A19-8EA3-9F0E54FC82D2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC263632-465F-495F-97E0-1F5A817B19E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC263632-465F-495F-97E0-1F5A817B19E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC263632-465F-495F-97E0-1F5A817B19E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC263632-465F-495F-97E0-1F5A817B19E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E669EF8-E13C-4543-AB89-46C8D51A69EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E669EF8-E13C-4543-AB89-46C8D51A69EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E669EF8-E13C-4543-AB89-46C8D51A69EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E669EF8-E13C-4543-AB89-46C8D51A69EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81D411FB-18CF-49F1-922E-A498F06F997F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81D411FB-18CF-49F1-922E-A498F06F997F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81D411FB-18CF-49F1-922E-A498F06F997F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81D411FB-18CF-49F1-922E-A498F06F997F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F42F8FA6-2112-4575-B24F-BD31CE37E328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F42F8FA6-2112-4575-B24F-BD31CE37E328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F42F8FA6-2112-4575-B24F-BD31CE37E328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F42F8FA6-2112-4575-B24F-BD31CE37E328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7D03E8-E61F-4DF4-960B-8022875B7B78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA7D03E8-E61F-4DF4-960B-8022875B7B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7D03E8-E61F-4DF4-960B-8022875B7B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA7D03E8-E61F-4DF4-960B-8022875B7B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69225B24-9AAE-4A19-8EA3-9F0E54FC82D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69225B24-9AAE-4A19-8EA3-9F0E54FC82D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69225B24-9AAE-4A19-8EA3-9F0E54FC82D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69225B24-9AAE-4A19-8EA3-9F0E54FC82D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31FA509D-4264-4201-AF38-C29F0566F75E}
+	EndGlobalSection
+EndGlobal

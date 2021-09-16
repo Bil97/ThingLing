@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ThingLing.Controls.TabControl"
+             Focusable="True">
+  <UserControl.Styles>
+    <StyleInclude Source="/Resources/MyStyles.axaml" />
+  </UserControl.Styles>
+
+  <DockPanel>
+    <DockPanel x:Name="TabStrip" DockPanel.Dock="Top">
+      <Image x:Name="DocMenu" Source="avares://ThingLing.Controls.TabControl/Images/dock_menu.png" DockPanel.Dock="Right"
+             ToolTip.Tip="Show Open Tabs" 
+             Margin="5,2"
+             Classes="header"
+             PointerReleased="OpenTabs_PointerReleased" />
+      <Image x:Name="NewTabItem" Source="avares://ThingLing.Controls.TabControl/Images/plus.png" DockPanel.Dock="Right"
+             ToolTip.Tip="Add New Tab" Classes="header"
+             Margin="5,2" 
+             PointerReleased="NewTabItem_PointerReleased"/>
+      <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                    VerticalScrollBarVisibility="Hidden">
+        <StackPanel x:Name="HeaderPanel" Orientation="Horizontal" />
+      </ScrollViewer>
+    </DockPanel>
+
+    <Border x:Name="SeparatorBorder" DockPanel.Dock="Top"
+            BorderThickness="1" HorizontalAlignment="Stretch" />
+    <Grid x:Name="ContentPanel" />
+  </DockPanel>
+</UserControl>

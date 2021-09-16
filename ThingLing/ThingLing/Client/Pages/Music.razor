@@ -1,0 +1,257 @@
+﻿@page "/music"
+
+<div class="max-width mx-auto mb-5">
+    <AuthorizeView Roles="Admin" Context="authState">
+        <EditForm Model="music" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-label-group">
+                <InputText @bind-Value="music.Name" class="form-control mb-1" placeholder="Music name" />
+                <label>Music name</label>
+                <ValidationMessage For="(()=>music.Name)" />
+            </div>
+            <div class="form-label-group">
+                <InputText @bind-Value="music.Url" class="form-control mb-1" placeholder="Music url" />
+                <label>Music url</label>
+                <ValidationMessage For="@(()=>music.Url)" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                Add
+                @if (Submitting)
+                {
+                    <span class="spinner-border spinner-border-sm"></span>
+                }
+            </button>
+        </EditForm>
+    </AuthorizeView>
+</div>
+
+@if (Error == true)
+{
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+        @Response
+    </div>
+}
+@if (Error == false)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+        @Response
+    </div>
+}
+
+
+@if (_Music == null)
+{
+    <em>Loading...</em>
+}
+else if (_Music.Count < 1)
+{
+    <em>Coming soon</em>
+}
+else
+{
+    <div class="row">
+        @foreach (var _music in _Music)
+        {
+            <div class="col-lg-6 mb-5">
+                <div class="card h-100">
+                    <div class="card-body p-0">
+                        <iframe src="@_music.Url" class="iframe"></iframe>
+                        <div class="bg-light pl-3 font-weight-bolder"><a href="@_music.Url" target="_blank"><b>@_music.Name</b></a></div>
+                    </div>
+                    <AuthorizeView Roles="Admin">
+                        <div class="card footer p-0">
+                            <button class="btn btn-primary flex-fill mb-1" data-toggle="modal" data-target="#editModal" @onclick="()=>ShowModal(_music)">Edit</button>
+                            <button class="btn btn-danger flex-fill" data-toggle="modal" data-target="#deleteModal" @onclick="()=>ShowModal(_music)">Delete</button>
+                        </div>
+                    </AuthorizeView>
+                </div>
+            </div>
+        }
+
+        <!-- Edit modal-->
+        <div class="modal fade" id="editModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update music</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <AuthorizeView Roles="Admin" Context="authState">
+                        <EditForm Model="music" OnValidSubmit="HandleUpdate">
+                            <DataAnnotationsValidator />
+                            <div class="form-label-group">
+                                <InputText @bind-Value="music.Name" class="form-control mb-1" placeholder="Music name" />
+                                <label>Music name</label>
+                                <ValidationMessage For="(()=>music.Name)" />
+                            </div>
+                            <div class="form-label-group">
+                                <InputText @bind-Value="music.Url" class="form-control mb-1" placeholder="Music url" />
+                                <label>Music url</label>
+                                <ValidationMessage For="@(()=>music.Url)" />
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                                Update
+                                @if (Submitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm"></span>
+                                }
+                            </button>
+                        </EditForm>
+                    </AuthorizeView>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End edit modal-->
+        <!-- Delete modal-->
+        <div class="modal fade" id="deleteModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete music</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input @bind="music.Name" class="form-control" placeholder="Category name" disabled />
+                            <div class="input-group-append">
+                                <button @onclick="@HandleDelete" class="input-group-text btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End delete modal-->
+    </div>
+}
+@code {
+    async protected override Task OnInitializedAsync()
+    {
+        StateContainer.Title = "My Music";
+        await GetMusic();
+    }
+
+    bool Submitting { get; set; }
+    bool? Error { get; set; }
+    string Response { get; set; }
+
+    public List<ThingLing.Shared.Models.Music> _Music { get; set; }
+    public ThingLing.Shared.Models.Music music = new ThingLing.Shared.Models.Music();
+
+    async Task HandleSubmit()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.PostAsJsonAsync<ThingLing.Shared.Models.Music>($"api/music", music);
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                music = new ThingLing.Shared.Models.Music();
+                Error = false;
+                await GetMusic();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleUpdate()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.PutAsJsonAsync<ThingLing.Shared.Models.Music>($"api/music", music);
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                Error = false;
+                await GetMusic();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleDelete()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.DeleteAsync($"api/music/{music.Id}");
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                Error = false;
+                await GetMusic();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task GetMusic()
+    {
+        try
+        {
+            _Music = await _httpClient.GetFromJsonAsync<List<ThingLing.Shared.Models.Music>>("api/music");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void ShowModal(ThingLing.Shared.Models.Music value)
+    {
+        music = value;
+    }
+
+    private async Task CloseModal()
+    {
+        music = new ThingLing.Shared.Models.Music();
+        await GetMusic();
+    }
+
+}

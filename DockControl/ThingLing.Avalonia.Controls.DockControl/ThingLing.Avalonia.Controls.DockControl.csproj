@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ThingLing.Controls</RootNamespace>
+    <AssemblyName>ThingLing.Controls.DockControl</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Images\auto_hide.png" />
+    <None Remove="Images\auto_hide_bottom.png" />
+    <None Remove="Images\auto_hide_left.png" />
+    <None Remove="Images\auto_hide_right.png" />
+    <None Remove="Images\auto_hide_top.png" />
+    <None Remove="Images\dock_a_document.png" />
+    <None Remove="Images\dock_left.png" />
+    <None Remove="Images\dock_mnu.png" />
+    <None Remove="Images\dock_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Images\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.3" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.3" />
+   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TabControl\ThingLing.Avalonia.Controls.TabControl\ThingLing.Avalonia.Controls.TabControl.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\auto_hide.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\dock_as_document.png" />
+    <Resource Include="Images\dock_bottom.png" />
+    <Resource Include="Images\dock_menu.png" />
+    <Resource Include="Images\dock_top.png" />
+    <Resource Include="Images\menu.png" />
+    <Resource Include="Images\minimize.png" />
+  </ItemGroup>
+</Project>

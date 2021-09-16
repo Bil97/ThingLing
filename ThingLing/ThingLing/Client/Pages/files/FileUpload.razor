@@ -1,0 +1,88 @@
+﻿@page "/upload"
+
+<div class="card mx-auto" style="max-width:768px">
+    <div class="card-body">
+        <EditForm Model="file">
+            <div class="form-group">
+                <InputFile class="form-control-file border" OnChange="OnInputFileChange" disabled="@Submitting" multiple />
+            </div>
+        </EditForm>
+        @if (Submitting)
+        {
+            <p>Sending, please wait...</p>
+        }
+
+        @if (sizeError)
+        {
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" @onclick="(() => { sizeError = false; })" class="close">&times;</button>
+                Failed to send because some files are lager than 1GB.
+            </div>
+        }
+        @if (Error == true)
+        {
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+                @Response
+            </div>
+        }
+        @if (Error == false)
+        {
+            <div class="alert alert-success alert-dismissible">
+                <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+                @Response
+            </div>
+        }
+    </div>
+</div>
+
+@code{
+    private bool Submitting { get; set; }
+    private bool? Error { get; set; }
+    private bool sizeError { get; set; }
+    private string Response { get; set; }
+    private File file = new File();
+
+    protected override void OnInitialized()
+    {
+        StateContainer.Title = "Upload files";
+    }
+
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            Submitting = true;
+            Error = null;
+            sizeError = false;
+
+            MultipartFormDataContent content = new MultipartFormDataContent();
+            foreach (var file in e.GetMultipleFiles())
+            {
+                long maxSize = 1181116006;//1gb
+                if (file.Size > maxSize) { sizeError = true; Submitting = false; return; }
+                var stream = file.OpenReadStream(maxSize);
+                content.Add(new StreamContent(stream), "formfile", file.Name);
+            }
+
+            var result = await _httpClient.PostAsync($"api/files", content);
+            Response = await result.Content.ReadAsStringAsync();
+            Submitting = false;
+
+            if (result.IsSuccessStatusCode)
+            {
+                Error = false;
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+}

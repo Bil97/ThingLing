@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ColorFinder.Mobile.MainPage">
+
+    <StackLayout Padding="5">
+        <StackLayout Orientation="Horizontal">
+            <Button x:Name="LoadImageButton" Text="Load image" 
+                    HorizontalOptions="Start"
+                    Clicked="LoadImageButton_Clicked"/>
+            <Button x:Name="TakeScreenshotButton" Text="Take screenshot" 
+                    HorizontalOptions="CenterAndExpand"
+                    Clicked="TakeScreenshotButton_Clicked"/>
+            <Button x:Name="SelectFromScreenButton" Text="Select from screen"
+                    HorizontalOptions="End"
+                    Clicked="SelectFromScreenButton_Clicked"/>
+        </StackLayout>
+        <Frame BackgroundColor="LightGray" 
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+            <Image x:Name="LoadedImage" Aspect="AspectFit"  />
+        </Frame>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Color preview" HorizontalOptions="Start"
+                   VerticalOptions="Center"/>
+            <Frame BackgroundColor="LightGray" HeightRequest="15" HorizontalOptions="FillAndExpand" >
+                <BoxView x:Name="ColorPreviewBoxView" Height="50" HorizontalOptions="CenterAndExpand"/>
+            </Frame>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Hex value" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Entry x:Name="HexColorEntry" Placeholder="Picked color" 
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="FillAndExpand" IsReadOnly="True"/>
+            <Button x:Name="CopyHexToClipBoardButton" Text="Copy Hex value"
+                    HorizontalOptions="End"
+                    Clicked="CopyHexToClipBoardButton_Clicked"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="RGB value" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Entry x:Name="RGBColorEntry" Placeholder="Picked color" 
+                   HorizontalTextAlignment="Center"
+                     HorizontalOptions="FillAndExpand" IsReadOnly="True"/>
+            <Button x:Name="CopyRGBToClipBoardButton" Text="Copy RGB value"
+                    HorizontalOptions="End"
+                    Clicked="CopyRGBToClipBoardButton_Clicked"/>
+        </StackLayout>
+        <Button x:Name="ClearButton" Text="Clear"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="ClearButton_Clicked"/>
+    </StackLayout>
+
+</ContentPage>

@@ -1,0 +1,257 @@
+﻿@page "/videos"
+
+<div class="max-width mx-auto mb-5">
+    <AuthorizeView Roles="Admin" Context="authState">
+        <EditForm Model="video" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-label-group">
+                <InputText @bind-Value="video.Name" class="form-control mb-1" placeholder="Video name" />
+                <label>Video name</label>
+                <ValidationMessage For="(()=>video.Name)" />
+            </div>
+            <div class="form-label-group">
+                <InputText @bind-Value="video.Url" class="form-control mb-1" placeholder="Video url" />
+                <label>Video url</label>
+                <ValidationMessage For="@(()=>video.Url)" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                Add
+                @if (Submitting)
+                {
+                    <span class="spinner-border spinner-border-sm"></span>
+                }
+            </button>
+        </EditForm>
+    </AuthorizeView>
+</div>
+
+@if (Error == true)
+{
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+        @Response
+    </div>
+}
+@if (Error == false)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+        @Response
+    </div>
+}
+
+
+@if (_Videos == null)
+{
+    <em>Loading...</em>
+}
+else if (_Videos.Count < 1)
+{
+    <em>Coming soon</em>
+}
+else
+{
+    <div class="row">
+        @foreach (var video in _Videos)
+        {
+            <div class="col-lg-6 mb-5">
+                <div class="card h-100">
+                    <div class="card-body p-0">
+                        <iframe src="@video.Url" class="iframe"></iframe>
+                        <div class="bg-light pl-3 font-weight-bolder"><a href="@video.Url" target="_blank"><b>@video.Name</b></a></div>
+                    </div>
+                    <AuthorizeView Roles="Admin">
+                        <div class="card footer p-0">
+                            <button class="btn btn-primary flex-fill mb-1" data-toggle="modal" data-target="#editModal" @onclick="()=>ShowModal(video)">Edit</button>
+                            <button class="btn btn-danger flex-fill" data-toggle="modal" data-target="#deleteModal" @onclick="()=>ShowModal(video)">Delete</button>
+                        </div>
+                    </AuthorizeView>
+                </div>
+            </div>
+        }
+
+        <!-- Edit modal-->
+        <div class="modal fade" id="editModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update video</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <AuthorizeView Roles="Admin" Context="authState">
+                        <EditForm Model="video" OnValidSubmit="HandleUpdate">
+                            <DataAnnotationsValidator />
+                            <div class="form-label-group">
+                                <InputText @bind-Value="video.Name" class="form-control mb-1" placeholder="Video name" />
+                                <label>Video name</label>
+                                <ValidationMessage For="(()=>video.Name)" />
+                            </div>
+                            <div class="form-label-group">
+                                <InputText @bind-Value="video.Url" class="form-control mb-1" placeholder="Video url" />
+                                <label>Video url</label>
+                                <ValidationMessage For="@(()=>video.Url)" />
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                                Update
+                                @if (Submitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm"></span>
+                                }
+                            </button>
+                        </EditForm>
+                    </AuthorizeView>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End edit modal-->
+        <!-- Delete modal-->
+        <div class="modal fade" id="deleteModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete video</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input @bind="video.Name" class="form-control" placeholder="Category name" disabled />
+                            <div class="input-group-append">
+                                <button @onclick="@HandleDelete" class="input-group-text btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End delete modal-->
+    </div>
+}
+@code {
+    async protected override Task OnInitializedAsync()
+    {
+        StateContainer.Title = "Videos";
+        await GetVideos();
+    }
+
+    bool Submitting { get; set; }
+    bool? Error { get; set; }
+    string Response { get; set; }
+
+    public List<Video> _Videos { get; set; }
+    public Video video = new Video();
+
+    async Task HandleSubmit()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.PostAsJsonAsync<Video>($"api/videos", video);
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                video = new Video();
+                Error = false;
+                await GetVideos();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleUpdate()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.PutAsJsonAsync<Video>($"api/videos", video);
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                Error = false;
+                await GetVideos();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleDelete()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.DeleteAsync($"api/videos/{video.Id}");
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                Error = false;
+                await GetVideos();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task GetVideos()
+    {
+        try
+        {
+            _Videos = await _httpClient.GetFromJsonAsync<List<Video>>("api/videos");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void ShowModal(Video value)
+    {
+        video = value;
+    }
+
+    private async Task CloseModal()
+    {
+        video = new Video();
+        await GetVideos();
+    }
+
+}

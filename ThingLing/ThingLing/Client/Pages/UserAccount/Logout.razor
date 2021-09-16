@@ -1,0 +1,26 @@
+﻿@page "/user-account/logout"
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await _httpClient.GetAsync($"api/ApplicationUsers/logout");
+
+            await _localStorage.RemoveItemAsync("authToken");
+            ((ApiAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+            Navigation.NavigateTo("/");
+        }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            ex.Redirect();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+}

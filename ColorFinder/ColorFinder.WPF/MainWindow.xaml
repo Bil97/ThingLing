@@ -1,0 +1,60 @@
+﻿<Window x:Class="ColorFinder.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ColorFinder.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button x:Name="LoadImageButton" Content="Load image" 
+                    Margin="0,0,0,5" HorizontalAlignment="Stretch"
+                    Click="LoadImageButton_Click"/>
+            <Button x:Name="TakeScreenshotButton" Content="Take screenshot" 
+                    Margin="0,0,0,5" HorizontalAlignment="Stretch"
+                    Click="TakeScreenshotButton_Click"/>
+            <Button x:Name="SelectFromScreenButton" Content="Select from screen"
+                    Margin="0,0,0,5" HorizontalAlignment="Stretch"
+                    Click="SelectFromScreenButton_Click"/>
+            <TextBlock Text="Color preview" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+
+            <Rectangle x:Name="ColorPreviewRectangle" Height="50"
+                       Stroke="Gray" StrokeThickness="1"
+                       Margin="0,0,0,5"/>
+
+            <TextBlock Text="Hex value" HorizontalAlignment="Center"/>
+            <TextBox x:Name="HexColorTextBox"
+                     Margin="0,0,0,5" HorizontalAlignment="Stretch" IsReadOnly="True"/>
+            <Button x:Name="CopyHexToClipBoardButton" Content="Copy Hex value" Margin="0,0,0,5"
+                    HorizontalAlignment="Stretch"
+                    Click="CopyHexToClipBoardButton_Click"/>
+
+            <TextBlock Text="RGB value" HorizontalAlignment="Center"/>
+            <TextBox x:Name="RGBColorTextBox" 
+                     Margin="0,0,0,5"
+                     HorizontalAlignment="Stretch" IsReadOnly="True"/>
+
+            <Button x:Name="CopyRGBToClipBoardButton" Content="Copy RGB value" Margin="0,0,0,5"
+                    HorizontalAlignment="Stretch"
+                    Click="CopyRGBToClipBoardButton_Click"/>
+            <Button x:Name="ClearButton" Content="Clear" Margin="0,0,0,5"
+                    HorizontalAlignment="Stretch"
+                    Click="ClearButton_Click"/>
+        </StackPanel>
+        <Border BorderBrush="LightGray" BorderThickness="2"
+                Grid.Column="1" Margin="5,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <Image x:Name="LoadedImage" Stretch="Uniform" 
+                   MouseEnter="LoadedImage_MouseEnter" 
+                   MouseLeave="LoadedImage_MouseLeave" 
+                   MouseMove="LoadedImage_MouseMove"
+                   MouseWheel ="LoadedImage_MouseWheel" />
+        </Border>
+    </Grid>
+</Window>

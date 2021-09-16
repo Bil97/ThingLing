@@ -1,0 +1,6 @@
+﻿@code {
+    protected override void OnInitialized()
+    {
+        Navigation.NavigateTo($"user-account/login/{Uri.EscapeDataString(Navigation.Uri)}");
+    }
+}

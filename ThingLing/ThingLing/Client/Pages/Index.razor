@@ -1,0 +1,24 @@
+﻿@page "/"
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+        <h1>Welcome</h1>
+        <p>
+            Get you apps running on
+            <br />
+            <strong>Windows</strong>, <strong>Mac</strong>, <strong>Linux</strong>,
+            <strong>Android</strong>, <strong>iOS</strong> and the <strong>web</strong>.
+        </p>
+        <p>Checkout my projects on <strong><a href="https://github.com/Bil97" target="_blank">GitHub.</a></strong></p>
+        <p><a href="mailto:bil19ly@gmail.com" class="btn btn-primary">Submit your request <strong>NOW !!!</strong></a></p>
+        <p>You can also have your 3D models drawn for you.</p>
+    </div>
+</div>
+
+@code{
+    protected override void OnInitialized()
+    {
+        StateContainer.Title = "Home";
+    }
+
+}

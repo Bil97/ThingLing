@@ -1,0 +1,147 @@
+﻿@page "/contact-forms"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Contacts == null)
+{
+    <em>Loading...</em>
+}
+else if (Contacts.Count < 1)
+{
+    <p>Coming soon</p>
+}
+else
+{
+    @if (Error == true)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+            @Response
+        </div>
+    }
+    @if (Error == false)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+            @Response
+        </div>
+    }
+    <div class="row">
+
+        @foreach (var contact in Contacts)
+        {
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            @contact.Subject
+                        </div>
+                        <div class="card-text">@contact.Email</div>
+                        <div class="card-text text-prewrap">@contact.Message</div>
+                    </div>
+                    <div class="card-footer bg-white p-1">
+                        <div class="d-flex">
+                            <button class=" btn btn-primary flex-fill mr-1" data-toggle="modal" data-target="#replyModal" @onclick="()=> { this.contact = contact; }">Reply</button>
+                            <button class=" btn btn-danger flex-fill ml-1" @onclick="()=>Delete(contact.Id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- The Modal -->
+        <div class="modal" id="replyModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Type your reply</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <textarea @bind="contact.Reply" class="form-control" required />
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" @onclick="Reply">
+                            Send
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<ContactForm> Contacts { get; set; }
+    private ContactForm contact = new ContactForm();
+    private bool? Error { get; set; }
+    private string Response { get; set; }
+
+    async protected override Task OnInitializedAsync()
+    {
+        StateContainer.Title = "Messages";
+        await GetContacts();
+    }
+
+    async private Task GetContacts()
+    {
+        try
+        {
+            Contacts = await _httpClient.GetFromJsonAsync<List<ContactForm>>($"api/ContactForms");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    async private Task Reply()
+    {
+        try
+        {
+            var result = await _httpClient.PostAsJsonAsync($"api/ContactForms/reply", contact);
+            Response = await result.Content.ReadAsStringAsync();
+            if (!result.IsSuccessStatusCode)
+            {
+                Error = true;
+            }
+            else
+            {
+                Error = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async private Task Delete(string contactId)
+    {
+        try
+        {
+            var result = await _httpClient.DeleteAsync($"api/ContactForms/{contactId}");
+            Response = await result.Content.ReadAsStringAsync();
+            if (!result.IsSuccessStatusCode)
+            {
+                Error = true;
+            }
+            else
+            {
+                Error = false;
+                await GetContacts();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

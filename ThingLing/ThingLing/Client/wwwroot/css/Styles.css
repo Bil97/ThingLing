@@ -1,0 +1,10 @@
+﻿.max-width {
+    max-width: 768px;
+}
+.iframe{
+    width:100%;
+    height:15em;
+}
+.text-prewrap {
+    white-space: pre-wrap;
+}

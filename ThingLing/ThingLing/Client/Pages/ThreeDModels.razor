@@ -1,0 +1,292 @@
+﻿@page "/3dmodels"
+
+<div class="max-width mx-auto mb-5">
+    <AuthorizeView Roles="Admin" Context="authState">
+        <EditForm Model="_3dmodel" OnSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-label-group">
+                <InputText @bind-Value="_3dmodel.Name" class="form-control mb-1" placeholder="3D model name" required />
+                <label>3D model name</label>
+                <ValidationMessage For="(()=>_3dmodel.Name)" />
+            </div>
+            <div class="form-label-group">
+                <InputText @bind-Value="_3dmodel.Url" class="form-control mb-1" placeholder="3D model url" type="url" required />
+                <label>3D model url</label>
+                <ValidationMessage For="@(()=>_3dmodel.Url)" />
+            </div>
+            <div class="form-label-group border">
+                <InputFile OnChange="DisplayImageInputFileChange" class="form-control-file mb-1" accept=".jpg, .jpeg, .png, .tiff, .tif, .bmp, .gif, ico" required />
+                <label>Display image</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                Add
+                @if (Submitting)
+                {
+                    <span class="spinner-border spinner-border-sm"></span>
+                }
+            </button>
+        </EditForm>
+    </AuthorizeView>
+</div>
+
+@if (Error == true)
+{
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+        @Response
+    </div>
+}
+@if (Error == false)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+        @Response
+    </div>
+}
+
+
+@if (Models == null)
+{
+    <em>Loading...</em>
+}
+else if (Models.Count < 1)
+{
+    <em>Coming soon</em>
+}
+else
+{
+    <div class="row">
+        @foreach (var model in Models)
+        {
+            var imageUrl = $"{_httpClient.BaseAddress}api/files/{model.DisplayImagePath}";
+            <div class="col-lg-6 mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top" src="@imageUrl" alt="@model.Name" style="width:100%">
+                    <div class="card-body">
+                        <h4 class="card-title">@model.Name</h4>
+                        <a href="@model.Url" class="btn btn-primary">Download</a>
+                    </div>
+
+                    <AuthorizeView Roles="Admin">
+                        <div class="card footer p-0">
+                            <button class="btn btn-primary flex-fill mb-1" data-toggle="modal" data-target="#editModal" @onclick="()=>ShowModal(model)">Edit</button>
+                            <button class="btn btn-danger flex-fill" data-toggle="modal" data-target="#deleteModal" @onclick="()=>ShowModal(model)">Delete</button>
+                        </div>
+                    </AuthorizeView>
+                </div>
+            </div>
+        }
+
+        <!-- Edit modal-->
+        <div class="modal fade" id="editModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update 3D model</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <AuthorizeView Roles="Admin" Context="authState">
+                        <EditForm Model="_3dmodel" OnValidSubmit="HandleUpdate">
+                            <DataAnnotationsValidator />
+                            <div class="form-label-group">
+                                <InputText @bind-Value="_3dmodel.Name" class="form-control mb-1" placeholder="3D model name" required />
+                                <label>3D model name</label>
+                                <ValidationMessage For="(()=>_3dmodel.Name)" />
+                            </div>
+                            <div class="form-label-group">
+                                <InputText @bind-Value="_3dmodel.Url" class="form-control mb-1" placeholder="3D model url" required />
+                                <label>3D model url</label>
+                                <ValidationMessage For="@(()=>_3dmodel.Url)" />
+                            </div>
+                            <div class="form-label-group border">
+                                <InputFile OnChange="DisplayImageInputFileChange" class="form-control-file border mb-1" accept=".jpg, .jpeg, .png, .tiff, .tif, .bmp, .gif, ico" />
+                                <label>Dispalay image</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                                Update
+                                @if (Submitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm"></span>
+                                }
+                            </button>
+                        </EditForm>
+                    </AuthorizeView>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End edit modal-->
+        <!-- Delete modal-->
+        <div class="modal fade" id="deleteModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete 3D model</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input @bind="_3dmodel.Name" class="form-control" placeholder="Category name" disabled />
+                            <div class="input-group-append">
+                                <button @onclick="@HandleDelete" class="input-group-text btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End delete modal-->
+    </div>
+}
+@code {
+    async protected override Task OnInitializedAsync()
+    {
+        StateContainer.Title = "3D Models";
+        await Get3DModels();
+    }
+
+    bool Submitting { get; set; }
+    bool? Error { get; set; }
+    string Response { get; set; }
+    byte[] displayImage;
+
+    public List<ThingLing.Shared.Models.ThreeDModel> Models { get; set; }
+    public ThingLing.Shared.Models.ThreeDModel _3dmodel = new ThingLing.Shared.Models.ThreeDModel();
+
+    async Task HandleSubmit()
+    {
+        try
+        {
+            Submitting = true;
+
+            var content = new MultipartFormDataContent { { new ByteArrayContent(displayImage), "DisplayImage", "display-image.png" } };
+
+            content.Add(new StringContent(_3dmodel.Name), "name");
+            content.Add(new StringContent(_3dmodel.Url), "url");
+            var result = await _httpClient.PostAsync($"api/threedmodels", content);
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                displayImage = null;
+                _3dmodel = new ThingLing.Shared.Models.ThreeDModel();
+                Error = false;
+                await Get3DModels();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleUpdate()
+    {
+        try
+        {
+            Submitting = true;
+            var content = new MultipartFormDataContent();
+            if (displayImage != null)
+                content.Add(new ByteArrayContent(displayImage), "DisplayImage", "display-image.png");
+            content.Add(new StringContent(_3dmodel.Name), "name");
+            content.Add(new StringContent(_3dmodel.Url), "url");
+            var result = await _httpClient.PutAsync($"api/threedmodels/{_3dmodel.Id}", content);
+
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                displayImage = null;
+                Error = false;
+                await Get3DModels();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleDelete()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.DeleteAsync($"api/threedmodels/{_3dmodel.Id}");
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                Error = false;
+                await Get3DModels();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task Get3DModels()
+    {
+        try
+        {
+            Models = await _httpClient.GetFromJsonAsync<List<ThingLing.Shared.Models.ThreeDModel>>("api/threedmodels");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void ShowModal(ThingLing.Shared.Models.ThreeDModel value)
+    {
+        _3dmodel = value;
+    }
+
+    private async Task CloseModal()
+    {
+        _3dmodel = new ThingLing.Shared.Models.ThreeDModel();
+        await Get3DModels();
+    }
+
+    private async Task DisplayImageInputFileChange(InputFileChangeEventArgs e)
+    {
+        var imageFile = e.File;
+        var format = "image/png";
+
+        var resizedImageFile = await imageFile.RequestImageFileAsync(format, 400, 300);
+        displayImage = new byte[resizedImageFile.Size];
+        await resizedImageFile.OpenReadStream().ReadAsync(displayImage);
+    }
+
+}

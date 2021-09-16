@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--<TargetFramework>net5.0-windows</TargetFramework>-->
+    <TargetFrameworks>net5.0-windows;net452</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>ThingLing.Controls</RootNamespace>
+    <AssemblyName>ThingLing.Controls.DockControl</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\auto_hide_bottom.png" />
+    <None Remove="Images\auto_hide_left.png" />
+    <None Remove="Images\auto_hide_right.png" />
+    <None Remove="Images\auto_hide_top.png" />
+    <None Remove="Images\dock_as_document.png" />
+    <None Remove="Images\dock_left.png" />
+    <None Remove="Images\dock_menu.png" />
+    <None Remove="Images\dock_right.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\TabControl\ThingLing.WPF.Controls.TabControl\ThingLing.WPF.Controls.TabControl.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RandomGuid.AvaloniaUI.MainWindow"
+        Icon="icon.png"
+        Title="Random Guid">
+  <StackPanel x:Name="parentPanel" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+    <TextBox x:Name="GuidTextBox" TextWrapping="Wrap" AcceptsReturn="True" />
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+      <Button x:Name="NewGuidButton" Content="New" Margin="0,0,3,0"
+              Height="30" Width="75" ToolTip.Tip="New random text"
+              HorizontalContentAlignment="Center"
+              Click="NewGuidButton_Click"/>
+      <Button x:Name="AppendGuidButton" Content="Append" Margin="0,0,3,0"
+              Height="30" Width="75"
+               HorizontalContentAlignment="Center"
+              ToolTip.Tip="Add random text to the currently available"
+              Click="AppendGuidButton_Click"/>
+      <Button x:Name="CopyGuidButton" Content="Copy" Margin="0,0,3,0"
+              Height="30" Width="75"
+              ToolTip.Tip="Copy to clipboard"
+               HorizontalContentAlignment="Center"
+              Click="CopyGuidButton_Click"/>
+      <Button x:Name="ClearGuidTextBoxButton" Content="Clear"
+              Height="30" Width="75"
+              ToolTip.Tip="Clear textbox"
+               HorizontalContentAlignment="Center"
+              Click="ClearGuidTextBoxButton_Click"/>
+    </StackPanel>
+  </StackPanel>
+</Window>

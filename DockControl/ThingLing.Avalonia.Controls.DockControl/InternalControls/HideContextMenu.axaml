@@ -1,0 +1,22 @@
+<ContextMenu xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ThingLing.Controls.InternalControls.HideContextMenu">
+  <MenuItem x:Name="AutoHideLeftMenuItem" Header="AutoHide Left">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/auto_hide_left.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+  <MenuItem x:Name="AutoHideRightMenuItem" Header="AutoHide Right">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/auto_hide_right.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+  <MenuItem x:Name="AutoHideBottomMenuItem" Header="AutoHide Bottom">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/auto_hide_bottom.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+</ContextMenu>

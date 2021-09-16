@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RandomGuid.Mobile.MainPage">
+
+    <StackLayout HorizontalOptions="Fill" VerticalOptions="Center">
+        <Editor x:Name="GuidEditor" HorizontalOptions="Fill" Placeholder="Type in your text" AutoSize="TextChanges"/>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
+            <Button x:Name="NewGuidButton" Text="New"
+                    Clicked="NewGuidButton_Clicked"/>
+            <Button x:Name="AppendGuidButton" Text="Append"
+                    Clicked="AppendGuidButton_Clicked"/>
+            <Button x:Name="CopyGuidButton" Text="Copy" 
+                    Clicked="CopyGuidButton_Clicked"/>
+            <Button x:Name="ClearGuidEditorButton" Text="Clear"
+                   Clicked="ClearGuidEditorButton_Clicked"/>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>

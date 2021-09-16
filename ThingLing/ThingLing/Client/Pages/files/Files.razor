@@ -1,0 +1,88 @@
+﻿@page "/files"
+
+<AuthorizeView Roles="Admin">
+    @if (AllFiles == null)
+    {
+        <em>Loading...</em>
+    }
+    else if (AllFiles.Count < 1)
+    {
+        <p>Coming soon</p>
+    }
+    else
+    {
+        <div class="card mx-auto" style="max-height:768px">
+            <div class="card-header">
+                <a href="upload" class="btn btn-primary">Upload</a>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var file in AllFiles)
+                        {
+                            string url = $"{_httpClient.BaseAddress}api/files/{file.Name}";
+                            <tr>
+                                <td>
+                                    <div class="card-text">
+                                        <a href="@url" download target="_top">@file.Name</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger" @onclick="()=>Delete(file.Id)" disabled="@Submitting"> Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</AuthorizeView>
+
+@code {
+    private List<File> AllFiles { get; set; }
+    private bool Submitting { get; set; }
+
+    async protected override Task OnInitializedAsync()
+    {
+        StateContainer.Title = "Files";
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (!authState.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("upload");
+        }
+        await GetFiles();
+    }
+    async private Task GetFiles()
+    {
+        try
+        {
+            AllFiles = await _httpClient.GetFromJsonAsync<List<File>>($"api/files");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+    async private Task Delete(string fileId)
+    {
+        try
+        {
+            Submitting = true;
+            await _httpClient.DeleteAsync($"api/files/{fileId}");
+            Submitting = false;
+            await GetFiles();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

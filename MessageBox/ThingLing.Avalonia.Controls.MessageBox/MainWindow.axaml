@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ThingLing.Avalonia.Controls.MainWindow"
+        WindowStartupLocation="CenterOwner"
+        SystemDecorations="BorderOnly"
+        SizeToContent="WidthAndHeight"
+        CanResize="False"
+        ShowInTaskbar="False"
+        KeyUp="Window_OnKeyUp">
+    <Window.Styles>
+        <StyleInclude Source="/MyStyles.axaml" />
+    </Window.Styles>
+    <Border BorderThickness="1" BorderBrush="Gray">
+        <DockPanel>
+            <DockPanel x:Name="HeaderPanel" Background="LightGray" DockPanel.Dock="Top"
+                       PointerPressed="HeaderPanel_OnPointerPressed">
+                <Button Background="Transparent" Focusable="False" ToolTip.Tip="Close"
+                        DockPanel.Dock="Right" Click="CloseButton_Click">
+                    <Image Source="Images/close.png" Height="20" />
+                </Button>
+                <TextBlock x:Name="TitleTextBlock" Padding="2,10" />
+            </DockPanel>
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" x:Name="OkButton" Content="OK" IsDefault="True" Classes="mb"
+                        GotFocus="Button_OnGotFocus" Click="OKButton_Click" />
+                <Button Grid.Column="2" x:Name="YesButton" Content="Yes" Classes="mb"
+                        GotFocus="Button_OnGotFocus" IsVisible="False" Click="YesButton_Click" />
+                <Button Grid.Column="3" x:Name="NoButton" Content="No" Classes="mb"
+                        GotFocus="Button_OnGotFocus" IsVisible="False" Click="NoButton_Click" />
+                <Button Grid.Column="4" x:Name="CancelButton" Content="Cancel" Classes="mb"
+                        GotFocus="Button_OnGotFocus" IsVisible="False" Click="CancelButton_Click" />
+            </Grid>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Image x:Name="IconImage" Width="25" Height="25" Margin="5,0" />
+                <TextBlock x:Name="MessageTextBlock" Margin="5" TextWrapping="Wrap" />
+            </StackPanel>
+        </DockPanel>
+    </Border>
+</Window>

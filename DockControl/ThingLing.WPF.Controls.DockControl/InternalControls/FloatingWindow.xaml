@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="ThingLing.Controls.InternalControls.FloatingWindow"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ThingLing.Controls.InternalControls" xmlns:controls="clr-namespace:ThingLing.Controls;assembly=ThingLing.Controls.TabControl"
+             mc:Ignorable="d"             
+             MinHeight="50" MinWidth="100"
+             Height="300" Width="200"
+             MouseDown="Window_MouseDown"
+             Focusable="True"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="MainPanel">
+        <Border x:Name="HeaderBorder" 
+                HorizontalAlignment="Stretch" VerticalAlignment="Top"  
+                Height="2" Background="Gray"
+                MouseDown="Header_MouseDown"
+                MouseEnter="Header_MouseEnter"
+                MouseLeave="Header_MouseLeave">
+        </Border>
+
+        <Border x:Name="LeftBorder"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Stretch"
+                Width="2" Background="Gray"
+                MouseDown="LeftBorder_MouseDown"
+                MouseEnter="LeftBorder_MouseEnter"
+                MouseLeave="Header_MouseLeave"/>
+
+        <Border x:Name="TopBorder"
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Top"
+                Height="2" Background="Gray"
+                MouseDown="TopBorder_MouseDown"
+                MouseEnter="TopBorder_MouseEnter"
+                MouseLeave="Header_MouseLeave"/>
+
+        <Border x:Name="RightBorder"
+                HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                Width="2" Background="Gray"
+                MouseDown="RightBorder_MouseDown"
+                MouseEnter="RightBorder_MouseEnter" 
+                MouseLeave="Header_MouseLeave"/>
+
+        <Border x:Name="BottomBorder"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Height="2" Background="Gray"
+                MouseDown="BottomBorder_MouseDown"
+                MouseEnter="BottomBorder_MouseEnter"
+                MouseLeave="Header_MouseLeave"/>
+
+        <Grid x:Name="TabControlPanel" Margin="2,2,2,2" 
+              Focusable="True" 
+              GotFocus="Window_GotFocus"
+              LostFocus="Window_LostFocus"/>
+    </Grid>
+</UserControl>

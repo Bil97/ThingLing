@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar bg-dark">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+        <div class="top-row px-4">
+            <h3 class="text-dark mr-auto">
+                @StateContainer.Title
+            </h3>
+            <div class="ml-mde-auto">
+                <LoginDisplay />
+            </div>
+            <a href="https://github.com/Bil97" class="ml-mdg-auto" target="_blank">GitHub</a>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>
+@code{
+    protected override void OnInitialized()
+    {
+        StateContainer.OnChange += StateHasChanged;
+    }
+}

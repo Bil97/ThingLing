@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="ThingLing.Controls.TabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ThingLing.Controls"
+             mc:Ignorable="d" 
+             Focusable="True"
+            >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/MyResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <DockPanel x:Name="TabStrip" DockPanel.Dock="Top">
+            <Image x:Name="DocMenu" Source="Images/dock_menu.png"
+                   DockPanel.Dock="Right"
+                   Margin="5,2"
+                   ToolTip="Show Open Tabs" Style="{StaticResource headerImage}"
+                   MouseLeftButtonUp="OpenTabs_MouseLeftButtonUp" />
+            <Image x:Name="NewTabItem" Source="Images/plus.png" DockPanel.Dock="Right"
+                   ToolTip="Add New Tab" 
+                   Style="{StaticResource headerImage}"
+                   Margin="5,2" 
+                   MouseLeftButtonUp="NewTabItem_MouseLeftButtonUp"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden">
+                <StackPanel x:Name="HeaderPanel" Orientation="Horizontal" />
+            </ScrollViewer>
+        </DockPanel>
+
+        <Border x:Name="SeparatorBorder" DockPanel.Dock="Top"
+                BorderThickness="1" HorizontalAlignment="Stretch" />
+        <Grid x:Name="ContentPanel" x:FieldModifier="public"/>
+    </DockPanel>
+
+</UserControl>

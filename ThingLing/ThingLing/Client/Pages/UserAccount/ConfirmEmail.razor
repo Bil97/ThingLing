@@ -1,0 +1,62 @@
+﻿@page "/confirm-email/{UserId}/{Code}"
+
+<h3>Email confirmation</h3>
+
+@if (Submitting)
+{
+    <span>Please wait...</span>
+}
+
+
+@if (Error == true)
+{
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+        @Response
+    </div>
+}
+@if (Error == false)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+        @Response
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    [Parameter]
+    public string Code { get; set; }
+    private bool Submitting { get; set; }
+
+    private bool? Error;
+    private string Response;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Submitting = true;
+            Error = null;
+            var confirmEmailModel = new ThingLing.Shared.Models.UserAccount.ConfirmEmail { Id = UserId, Code = Code };
+
+            var result = await _httpClient.PostAsJsonAsync<ThingLing.Shared.Models.UserAccount.ConfirmEmail>($"api/ApplicationUsers/confirm-email", confirmEmailModel);
+            Response = await result.Content.ReadAsStringAsync();
+            if (!result.IsSuccessStatusCode)
+            {
+                Error = true;
+            }
+            else
+            {
+                Error = false;
+            }
+            Submitting = false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}

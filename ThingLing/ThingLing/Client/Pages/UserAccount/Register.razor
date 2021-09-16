@@ -1,0 +1,113 @@
+﻿@page "/user-account/create-account"
+@page "/user-account/create-account/{ReturnUrl}"
+
+<div class="card mx-auto" style="max-width:768px;">
+
+    <div class="card-header">
+        <h2>Create a new account.</h2>
+    </div>
+
+    <div class="card-body">
+
+        @if (Error == true)
+        {
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+                @Response
+            </div>
+        }
+        @if (Error == false)
+        {
+            <div class="alert alert-success alert-dismissible">
+                <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+                @Response
+            </div>
+        }
+        <EditForm Model="@register" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            @*<ValidationSummary />*@
+
+            <div class="form-group">
+                <label>Username (Email): </label>
+                <InputText @bind-Value="register.Email" class="form-control" placeholder="Your email address" />
+                <ValidationMessage For="(()=>register.Email)" />
+            </div>
+
+            <div class="form-group">
+                <label>Password: </label>
+                <InputText type="password" @bind-Value="register.Password" class="form-control" placeholder="Your password" />
+                <ValidationMessage For="(()=>register.Password)" />
+            </div>
+
+            <div class="form-group">
+                <label>Confirm password: </label>
+                <InputText type="password" @bind-Value="register.ConfirmPassword" class="form-control" placeholder="Confirm your password" />
+                <ValidationMessage For="(()=>register.ConfirmPassword)" />
+            </div>
+
+
+            <button type="submit" class="btn btn-primary" disabled="@Submitting">
+                Register
+                @if (Submitting)
+                {
+                    <span class="spinner-border spinner-border-sm"></span>
+                }
+            </button>
+            @if (ReturnUrl != null)
+            {
+                var url = $"{Uri.EscapeDataString(ReturnUrl)}";
+                <a href="user-account/login/@url" class="btn text-primary">Login</a>
+            }
+            else
+            {
+                <a href="user-account/login" class="btn text-primary">Login</a>
+            }
+        </EditForm>
+
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public string ReturnUrl { get; set; }
+
+    private bool? Error { get; set; }
+    private bool IsLoaded { get; set; }
+    private bool Submitting { get; set; }
+    private string Response { get; set; }
+
+    private ThingLing.Shared.Models.UserAccount.Register register = new ThingLing.Shared.Models.UserAccount.Register();
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.PostAsJsonAsync<ThingLing.Shared.Models.UserAccount.Register>($"api/ApplicationUsers/create-account", register);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                Submitting = false;
+                Error = true;
+                Response = await result.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                var registerResult = await result.Content.ReadAsStringAsync();
+                await _localStorage.SetItemAsync("authToken", registerResult);
+                ((ApiAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(registerResult);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", registerResult);
+
+                Error = false;
+                ReturnUrl = ReturnUrl ?? "/";
+                Navigation.NavigateTo(ReturnUrl);
+
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

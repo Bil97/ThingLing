@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ThingLing.Controls.TabItemHeader"
+             d:DesignHeight="300" d:DesignWidth="300"
+             VerticalContentAlignment="Center"
+             Margin="0,0,3,0" Padding="1">
+  <UserControl.Styles>
+    <StyleInclude Source="/Resources/MyStyles.axaml" />
+  </UserControl.Styles>
+  <DockPanel>
+    <Image x:Name="ContentIcon" DockPanel.Dock="Left" Classes="header" />
+    <TextBlock x:Name="ContentChanged" Text=" * " FontWeight="UltraBold"
+               DockPanel.Dock="Left"  Padding="0,0,5,0" />
+    <Border x:Name="CloseButton" 
+            Classes="header" DockPanel.Dock="Right"
+            ToolTip.Tip="Close"
+            PointerEnter="Border_PointerEnter"
+            PointerLeave="Border_PointerLeave"
+            PointerReleased="CloseWindow_PointerReleased">
+      <Image Source="avares://ThingLing.Controls.TabControl/Images/close.png" 
+             Classes="header"/>
+    </Border>
+    <Border x:Name="HideButton" Classes="header" DockPanel.Dock="Right"
+            ToolTip.Tip="Hide" IsVisible="false"
+            PointerReleased="ContextMenuButton_PointerReleased"
+            PointerEnter="Border_PointerEnter"
+            PointerLeave="Border_PointerLeave" >
+      <Image Source="avares://ThingLing.Controls.TabControl/Images/auto_hide.png" 
+             Classes="header" />
+    </Border>
+    <Border x:Name="MenuButton"
+            Classes="header" DockPanel.Dock="Right"
+            ToolTip.Tip="Menu" IsVisible="false"
+            PointerEnter="Border_PointerEnter"
+            PointerLeave="Border_PointerLeave"
+            PointerReleased="ContextMenuButton_PointerReleased">
+      <Image Source="avares://ThingLing.Controls.TabControl/Images/dock_menu.png"
+              Classes="header"/>
+    </Border>
+
+    <TextBlock x:Name="Header" TextTrimming="CharacterEllipsis" Padding="0,0,5,0"/>
+  </DockPanel>
+</UserControl>

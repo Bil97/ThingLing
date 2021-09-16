@@ -1,0 +1,33 @@
+<ContextMenu xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ThingLing.Controls.InternalControls.DockingContextMenu">
+  <MenuItem x:Name="DockTopMenuItem" Header="Dock Top">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/dock_top.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+  <MenuItem x:Name="DockLeftMenuItem" Header="Dock Left">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/dock_left.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+  <MenuItem x:Name="DockBottomMenuItem" Header="Dock Bottom">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/dock_bottom.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+  <MenuItem x:Name="DockRightMenuItem" Header="Dock Right">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/dock_right.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+  <MenuItem x:Name="DockAsDocumentMenuItem" Header="Dock As Document">
+    <MenuItem.Icon>
+      <Image Source="avares://ThingLing.Controls./Images/dock_as_document.png" />
+    </MenuItem.Icon>
+  </MenuItem>
+  <MenuItem x:Name="TabModeSwitch" Header="Switch Tab Mode"/>
+</ContextMenu>

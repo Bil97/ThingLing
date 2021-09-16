@@ -1,0 +1,88 @@
+﻿@page "/contact"
+
+<div class="mx-auto" style="max-width:768px;">
+    <div class="card mb-3">
+        <div class="card-header bg-white">
+            <h3>Contact</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">Phone number: <a href="tel:+254700474988">+254700474988</a></p>
+            <p class="card-text">E-mail address: <a href="mailto:bil19ly@outlook.com">bil19ly@outlook.com</a></p>
+            <p class="card-text">E-mail address 2: <a href="mailto:bil19ly@gmail.com">bil19ly@gmail.com</a></p>
+
+            <EditForm Model="Contact" OnValidSubmit="HandleValidSubmit" class="mb-3">
+                <DataAnnotationsValidator />
+                <div class="form-label-group">
+                    <InputText class="form-control" @bind-Value="Contact.Email" placeholder="Your email" />
+                    <label>Your email</label>
+                </div>
+                <div class="form-label-group">
+                    <InputText class="form-control" @bind-Value="Contact.Subject" placeholder="Message subject" />
+                    <label>Mesage subject</label>
+                </div>
+                <div class="forml-group">
+                    <label>Your message</label>
+                    <InputTextArea class="form-control" @bind-Value="Contact.Message" />
+                </div>
+                <button type="submit" class="btn btn-primary mt-3" disabled="@Submitting">
+                    Submit
+                    @if (Submitting)
+                    {
+                        <span class="spinner-border spinner-border-sm"></span>
+                    }
+                </button>
+            </EditForm>
+            @if (Error == true)
+            {
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+                    @Response
+                </div>
+            }
+            @if (Error == false)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+                    @Response
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        StateContainer.Title = "Contact me";
+    }
+
+    private ContactForm Contact { get; set; } = new ContactForm();
+    private bool? Error { get; set; }
+    private bool Submitting { get; set; }
+    private string Response { get; set; }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.PostAsJsonAsync<ContactForm>($"api/ContactForms/", Contact);
+            Response = await result.Content.ReadAsStringAsync();
+            Submitting = false;
+
+            if (!result.IsSuccessStatusCode)
+            {
+                Error = true;
+            }
+            else
+            {
+                Error = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

@@ -1,0 +1,312 @@
+﻿@page "/software"
+
+<div class="max-width mx-auto mb-5">
+    <AuthorizeView Roles="Admin" Context="authState">
+        <EditForm Model="software" OnSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-label-group">
+                <InputText @bind-Value="software.Name" class="form-control mb-1" placeholder="Software name" required />
+                <label>Software name</label>
+                <ValidationMessage For="(()=>software.Name)" />
+            </div>
+            <div class="form-label-group">
+                <InputText @bind-Value="software.Url" class="form-control mb-1" placeholder="Software url" required />
+                <label>Software url</label>
+                <ValidationMessage For="@(()=>software.Url)" />
+            </div>
+            <div class="form-group">
+                <label>Software details</label>
+                <InputTextArea @bind-Value="software.Details" class="form-control mb-1" placeholder="Software details" required />
+                <ValidationMessage For="@(()=>software.Details)" />
+            </div>
+            <div class="form-label-group border">
+                <InputFile OnChange="IconInputFileChange" class="form-control-file mb-1" accept=".jpg, .jpeg, .png, .tiff, .tif, .bmp, .gif, ico" required />
+                <label>Icon</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                Add
+                @if (Submitting)
+                {
+                    <span class="spinner-border spinner-border-sm"></span>
+                }
+            </button>
+        </EditForm>
+    </AuthorizeView>
+</div>
+
+@if (Error == true)
+{
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+        @Response
+    </div>
+}
+@if (Error == false)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+        @Response
+    </div>
+}
+
+
+@if (_Software == null)
+{
+    <em>Loading...</em>
+}
+else if (_Software.Count < 1)
+{
+    <em>Coming soon</em>
+}
+else
+{
+    <div class="row">
+        @foreach (var _software in _Software)
+        {
+            var imageUrl = $"{_httpClient.BaseAddress}api/files/{_software.IconPath}";
+            <div class="col-lg-6 mb-5">
+                <div class="card h-100">
+
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <img class="mr-5" src="@imageUrl" alt="@_software.Name">@_software.Name
+                        </h4>
+                        <h4 class="card-title">Details:</h4>
+                        <div class="card-text text-wrap">@_software.Details</div>
+                        <a href="@_software.Url" class="btn btn-primary">Download</a>
+                    </div>
+
+                    <AuthorizeView Roles="Admin">
+                        <div class="card footer p-0">
+                            <button class="btn btn-primary flex-fill mb-1" data-toggle="modal" data-target="#editModal" @onclick="()=>ShowModal(_software)">Edit</button>
+                            <button class="btn btn-danger flex-fill" data-toggle="modal" data-target="#deleteModal" @onclick="()=>ShowModal(_software)">Delete</button>
+                        </div>
+                    </AuthorizeView>
+                </div>
+            </div>
+        }
+
+        <!-- Edit modal-->
+        <div class="modal fade" id="editModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update software</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <AuthorizeView Roles="Admin" Context="authState">
+                        <EditForm Model="software" OnSubmit="HandleUpdate">
+                            <DataAnnotationsValidator />
+                            <div class="form-label-group">
+                                <InputText @bind-Value="software.Name" class="form-control mb-1" placeholder="Software name" required />
+                                <label>Software name</label>
+                                <ValidationMessage For="(()=>software.Name)" />
+                            </div>
+                            <div class="form-label-group">
+                                <InputText @bind-Value="software.Url" class="form-control mb-1" placeholder="Software url" required />
+                                <label>Software url</label>
+                                <ValidationMessage For="@(()=>software.Url)" />
+                            </div>
+                            <div class="form-group">
+                                <label>Software details</label>
+                                <InputTextArea @bind-Value="software.Details" class="form-control mb-1" placeholder="Software details" required />
+                                <ValidationMessage For="@(()=>software.Details)" />
+                            </div>
+                            <div class="form-label-group border">
+                                <InputFile OnChange="IconInputFileChange" class="form-control-file border mb-1" accept=".jpg, .jpeg, .png, .tiff, .tif, .bmp, .gif, ico" />
+                                <label>Icon</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" disabled="@Submitting">
+                                Update
+                                @if (Submitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm"></span>
+                                }
+                            </button>
+                        </EditForm>
+                    </AuthorizeView>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End edit modal-->
+        <!-- Delete modal-->
+        <div class="modal fade" id="deleteModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete software @software.Name me</h4>
+                        <button type="button" class="close" data-dismiss="modal" @onclick="@CloseModal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input @bind="software.Name" class="form-control" placeholder="Category name" disabled />
+                            <div class="input-group-append">
+                                <button @onclick="@HandleDelete" class="input-group-text btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End delete modal-->
+    </div>
+}
+@code {
+    async protected override Task OnInitializedAsync()
+    {
+        StateContainer.Title = "Software";
+        await GetSoftware();
+    }
+
+    bool Submitting { get; set; }
+    bool? Error { get; set; }
+    string Response { get; set; }
+    byte[] icon;
+
+    public List<ThingLing.Shared.Models.Software> _Software { get; set; }
+    public ThingLing.Shared.Models.Software software = new ThingLing.Shared.Models.Software();
+
+    async Task HandleSubmit()
+    {
+        try
+        {
+            Submitting = true;
+
+            var content = new MultipartFormDataContent { { new ByteArrayContent(icon), "Icon", "icon.png" } };
+
+            content.Add(new StringContent(software.Name), "name");
+            content.Add(new StringContent(software.Url), "url");
+            content.Add(new StringContent(software.Details), "details");
+
+            var result = await _httpClient.PostAsync($"api/software", content);
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                icon = null;
+                software = new ThingLing.Shared.Models.Software();
+                Error = false;
+                await GetSoftware();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleUpdate()
+    {
+        try
+        {
+            Submitting = true;
+
+            var content = new MultipartFormDataContent();
+            if (icon != null)
+                content.Add(new ByteArrayContent(icon), "Icon", "icon.png");
+            content.Add(new StringContent(software.Name), "name");
+            content.Add(new StringContent(software.Url), "url");
+            content.Add(new StringContent(software.Details), "details");
+
+            var result = await _httpClient.PutAsync($"api/software/{software.Id}", content);
+
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                icon = null;
+                Error = false;
+                await GetSoftware();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task HandleDelete()
+    {
+        try
+        {
+            Submitting = true;
+            var result = await _httpClient.DeleteAsync($"api/software/{software.Id}");
+            Submitting = false;
+            Response = await result.Content.ReadAsStringAsync();
+
+            if (result.IsSuccessStatusCode)
+            {
+                Error = false;
+                await GetSoftware();
+            }
+            else
+            {
+                Error = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    async Task GetSoftware()
+    {
+        try
+        {
+            _Software = await _httpClient.GetFromJsonAsync<List<ThingLing.Shared.Models.Software>>("api/software");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void ShowModal(ThingLing.Shared.Models.Software value)
+    {
+        software = value;
+    }
+
+    private async Task CloseModal()
+    {
+        software = new ThingLing.Shared.Models.Software();
+        await GetSoftware();
+    }
+
+    private async Task IconInputFileChange(InputFileChangeEventArgs e)
+    {
+        var imageFile = e.File;
+        var format = "image/png";
+
+        var resizedImageFile = await imageFile.RequestImageFileAsync(format, 400, 300);
+        icon = new byte[resizedImageFile.Size];
+        await resizedImageFile.OpenReadStream().ReadAsync(icon);
+    }
+
+}
+

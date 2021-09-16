@@ -1,0 +1,111 @@
+﻿@page "/about"
+
+<div class="mx-auto" style="max-width:768px;">
+    <div class="card mb-3">
+        <div class="card-body">
+            @{ string imageUrl = $"{_httpClient.BaseAddress}api/files";
+                <img src="@imageUrl/profile/bil.png" class="mx-auto d-block rounded">
+                <AuthorizeView Roles="Admin">
+                    <EditForm Model="file">
+                        <ChildContent Context="context2">
+                            <div class="form-group">
+                                <InputFile class="form-control-file border" OnChange="OnInputFileChange" />
+                            </div>
+                        </ChildContent>
+                    </EditForm>
+                </AuthorizeView>
+            }
+            <p class="card-text">
+                This website is owned, developed and maintained by me - Kiyayi Billy.
+                I am a self-driven, dedicated individual of high integrity in work and positive about every aspect of
+                life. I am also hard-working and I got passion in every task I take.
+                I am a self-determined, goal oriented, responsible and community minded team player
+                committed to building something larger and who puts aside personal gain for the well being of the others.
+                I focus all my efforts in creating useful software products and hope one day I will to make
+                something that will impress the world.
+                I appreciate others’ unique skills and talents and can efficiently work in a
+                team to achieve collective output.
+                I am guided by a commitment to do the right thing
+                while being awake to the feelings of those I serve. In making decisions, I uphold the
+                fundamentals of equity, fairness and social justice. I am always ready to be corrected and
+                take personal responsibilities of my decision, actions of commission or omission.
+            </p>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header bg-white">
+            <h3>Skills</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <h4>Programming: </h4>
+                Desktop, Web and Mobile app development in C#
+            </p>
+            <p class="card-text">
+                <h4>3D Modelling: </h4>
+                Blender
+            </p>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header bg-white">
+            <h3>Educational Background</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <h4>August-2016-to- December 2019: </h4>
+                Dedan Kimathi University of Technology - Degree in Bachelor of Science in Computer Science.
+            </p>
+            <p class="card-text">
+                <h4>March 2016-May 2016: </h4>
+                International College of Business And Technology – Computer Packages
+            </p>
+            <p class="card-text">
+                <h4>February 2012-November 2015: </h4>
+                Murang’a High School, Grade A-(77 points)
+            </p>
+            <p class="card-text">
+                <h4>August-2016-to- December 2019:</h4>
+                Dedan Kimathi University of Technology - Degree in Bachelor of Science in Computer Science.
+            </p>
+            <p class="card-text">
+                <h4>January 2004-December 2011: </h4>
+                Omulina Friends Primary School.
+            </p>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        StateContainer.Title = "About";
+    }
+
+    private File file = new File();
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            var imageFile = e.File;
+            var format = "image/png";
+
+            var resizedImageFile = await imageFile.RequestImageFileAsync(format, 200, 150);
+            var buffer = new byte[resizedImageFile.Size];
+            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+
+            MultipartFormDataContent content = new MultipartFormDataContent();
+            content.Add(new ByteArrayContent(buffer), "formfile", imageFile.Name);
+
+            await _httpClient.PostAsync($"api/files/profile", content);
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+}

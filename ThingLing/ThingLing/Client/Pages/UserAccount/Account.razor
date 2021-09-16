@@ -1,0 +1,151 @@
+﻿@page "/user-account"
+@attribute [Authorize]
+
+<h2>Account details</h2>
+
+<div class="card  mx-auto" style="max-width:768px">
+    <div class="card-body">
+
+        <EditForm Model="@_userDetails" OnValidSubmit="UpdateAccount">
+            <DataAnnotationsValidator />
+
+            <div class="row p-0">
+                <label class="col-4">Email: </label>
+                <div class="col-8 mb-3">
+                    <InputText @bind-Value="_userDetails.Email" class="form-control" placeholder="Your email address" />
+                    <ValidationMessage For="(()=>_userDetails.Email)" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn-sm btn-primary btn-block" disabled="@Submitting">
+                Save changes
+                @if (Submitting)
+                {
+                    <span class="spinner-border spinner-border-sm"></span>
+                }
+            </button>
+        </EditForm>
+
+        @if (Error == true)
+        {
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" @onclick="(() => { Error = null; })" class="close">&times;</button>
+                @Response
+            </div>
+        }
+        @if (Error == false)
+        {
+            <div class="alert alert-success alert-dismissible">
+                <button class="close" @onclick="(() => { Error = null; })">&times;</button>
+                @Response
+            </div>
+        }
+
+    </div>
+
+    <div class="card-footer d-flex">
+        <button class="btn-sm btn-primary flex-fill" data-toggle="modal" data-target="#changePassword">Change password</button>
+    </div>
+</div>
+
+<!-- Change password modal-->
+<div class="modal" id="changePassword">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Change Password</h4>
+                <button type="button" class="close" data-dismiss="modal" @onclick="CloseModal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <ChangePassword />
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Change password modal-->
+
+@code {
+    private bool? Error { get; set; }
+    private bool Submitting { get; set; }
+    private bool IsLoaded { get; set; }
+    private string Response { get; set; }
+
+    private UserDetails _userDetails = new UserDetails();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUser();
+    }
+
+    private async Task GetUser()
+    {
+        try
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+            var result = await _httpClient.GetAsync($"api/ApplicationUsers/{authState.User.Identity.Name}");
+
+            if (!result.IsSuccessStatusCode)
+            {
+                Response = await result.Content.ReadAsStringAsync();
+                Error = true;
+            }
+            else
+            {
+                Error = null;
+                using var stream = await result.Content.ReadAsStreamAsync();
+                _userDetails = await System.Text.Json.JsonSerializer.DeserializeAsync<UserDetails>(stream,
+                    new System.Text.Json.JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                    });
+            }
+        }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            ex.Redirect();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    private async Task UpdateAccount()
+    {
+        try
+        {
+            Submitting = true;
+            Error = null;
+            var postResponse = await _httpClient.PutAsJsonAsync<UserDetails>($"api/ApplicationUsers/update-account/{_userDetails.Id}", _userDetails);
+            Submitting = false;
+            Response = await postResponse.Content.ReadAsStringAsync();
+
+            if (!postResponse.IsSuccessStatusCode)
+            {
+                Error = true;
+            }
+            else
+            {
+                Error = false;
+                await GetUser();
+            }
+        }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            ex.Redirect();
+        }
+    }
+
+    private async Task CloseModal()
+    {
+        await GetUser();
+    }
+
+}

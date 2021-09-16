@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="RandomGuid.UWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RandomGuid.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <TextBox x:Name="GuidTextBox" HorizontalAlignment="Stretch" TextWrapping="Wrap" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="NewGuidButton" Content="New"  ToolTipService.ToolTip="New random text"
+                    Click="NewGuidButton_Click"/>
+            <Button x:Name="AppendGuidButton" Content="Append"  ToolTipService.ToolTip="Add random text to the currently available"
+                    Click="AppendGuidButton_Click"/>
+            <Button x:Name="CopyGuidButton" Content="Copy" 
+                    ToolTipService.ToolTip="Copy to clipboard" Click="CopyGuidButton_Click"/>
+            <Button x:Name="ClearGuidTextBoxButton" Content="Clear"
+                    ToolTipService.ToolTip="Clear textbox" Click="ClearGuidTextBoxButton_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Page>
