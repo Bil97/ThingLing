@@ -13,11 +13,11 @@ namespace ThingLing.Controls.InternalControls
     internal partial class FloatingWindow : UserControl
     {
         public string WindowName { get; set; }
-
         private DockControl _dockControl;
         DockingContextMenu dockingContextMenu = new();
         HideContextMenu hideContextMenu = new();
         TabControl TabControl;
+
         public FloatingWindow(DockControl dockControl)
         {
             InitializeComponent();
