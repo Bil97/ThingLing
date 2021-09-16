@@ -10,10 +10,6 @@
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>D:\Programming\Projects\ThingLing\ThinglingLib\</OutputPath>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
