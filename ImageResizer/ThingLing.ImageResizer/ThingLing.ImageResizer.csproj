@@ -6,7 +6,6 @@
     <Company>ThingLing</Company>
     <Description>Resizes images</Description>
     <Copyright>Copyright © 2021</Copyright>
-    <PackageLicenseFile>licence.txt</PackageLicenseFile>
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
