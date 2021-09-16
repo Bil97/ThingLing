@@ -9,20 +9,20 @@ namespace ThingLing.Controls.Methods
         {
             if (theme == null)
             {
-                CurrentTheme.SelectedWindowHeadingBackground = (Brush?)Brushes.MidnightBlue;
-                CurrentTheme.SelectedWindowHeadingForeground = (Brush?)Brushes.Silver;
-                CurrentTheme.UnSelectedWindowHeadingBackground = (Brush?)Brushes.DarkSlateGray;
-                CurrentTheme.UnSelectedWindowHeadingForeground = (Brush?)Brushes.White;
-                CurrentTheme.WindowBackground = (Brush?)Brushes.Azure;
+                CurrentTheme.SelectedWindowHeadingBackground = new SolidColorBrush(Colors.MidnightBlue);
+                CurrentTheme.SelectedWindowHeadingForeground = new SolidColorBrush(Colors.Silver);
+                CurrentTheme.UnSelectedWindowHeadingBackground = new SolidColorBrush(Colors.DarkSlateGray);
+                CurrentTheme.UnSelectedWindowHeadingForeground = new SolidColorBrush(Colors.White);
+                CurrentTheme.WindowBackground = new SolidColorBrush(Colors.Azure);
 
                 //TabControl
-                CurrentTheme.FocusedTabItemBackground = (Brush?)Brushes.Teal;
-                CurrentTheme.FocusedTabItemForeground = (Brush?)Brushes.Tan;
-                CurrentTheme.UnFocusedTabItemBackground = (Brush?)Brushes.CadetBlue;
-                CurrentTheme.UnFocusedTabItemForeground = (Brush?)Brushes.BurlyWood;
-                CurrentTheme.SeparatorBorder = (Brush?)Brushes.Teal;
-                CurrentTheme.TabItemBodyBackground = (Brush?)Brushes.SeaGreen;
-                CurrentTheme.TabItemBodyForeground = (Brush?)Brushes.PeachPuff;
+                CurrentTheme.FocusedTabItemBackground = new SolidColorBrush(Colors.Teal);
+                CurrentTheme.FocusedTabItemForeground = new SolidColorBrush(Colors.Tan);
+                CurrentTheme.UnFocusedTabItemBackground = new SolidColorBrush(Colors.CadetBlue);
+                CurrentTheme.UnFocusedTabItemForeground = new SolidColorBrush(Colors.BurlyWood);
+                CurrentTheme.SeparatorBorder = new SolidColorBrush(Colors.Teal);
+                CurrentTheme.TabItemBodyBackground = new SolidColorBrush(Colors.SeaGreen);
+                CurrentTheme.TabItemBodyForeground = new SolidColorBrush(Colors.PeachPuff);
             }
             else
             {
