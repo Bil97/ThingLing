@@ -8,16 +8,23 @@
     <Copyright>Copyright © 2021</Copyright>
     <PackageProjectUrl>https://github.com/Bil97/MessageBox</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Bil97/MessageBox</RepositoryUrl>
-    <PackageLicenseUrl>D:\Programming\Projects\ThingLing\licence.txt</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <RootNamespace>ThingLing.Avalonia.Controls</RootNamespace>
     <Company>ThingLing</Company>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
+    <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
    </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Images\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.TXT">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>
