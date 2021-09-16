@@ -1,2 +1,2 @@
 # ThingLing
- This repository contain all my personal projects
+ This repository contains all my personal projects.
