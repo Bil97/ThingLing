@@ -9,7 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingLing.Avalonia.Controls
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B7EBD447-027D-4E0E-9ADD-930709FC2D39}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\licence.txt = ..\..\..\licence.txt
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
