@@ -22,6 +22,11 @@ namespace ThingLing.Controls.InternalControls
         HideContextMenu hideContextMenu = new();
         TabControl TabControl;
 
+        public FloatingWindow()
+        {
+            InitializeComponent();
+        }
+
         public FloatingWindow(DockControl dockControl)
         {
             InitializeComponent();
@@ -49,7 +54,7 @@ namespace ThingLing.Controls.InternalControls
             TabControl.DockingContextMenu = dockingContextMenu;
             TabControl.HideContextMenu = hideContextMenu;
 
-            TabControl.PointerPressed += TabControl_PointerPressed;
+            TabControl.PointerPressed += Window_PointerPressed;
             TabControlPanel.Children.Add(TabControl);
         }
 
@@ -102,12 +107,12 @@ namespace ThingLing.Controls.InternalControls
             }
         }
 
-        private void TabControl_PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void Window_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             MakeActive();
         }
 
-        private void Window_GotFocus(object sender, RoutedEventArgs e)
+        private void Window_GotFocus(object sender, GotFocusEventArgs e)
         {
             MakeActive();
         }
@@ -135,11 +140,11 @@ namespace ThingLing.Controls.InternalControls
                 ContentIcon = contentIcon
             };
 
-            tabItem.TabItemHeader().PointerPressed += Header__PointerPressed;
+            tabItem.TabItemHeader().PointerPressed += Header_PointerPressed;
             tabItem.TabItemHeader().PointerEnter += Header_PointerEnter;
             tabItem.TabItemBody().TabItemHeader.MenuButton.IsVisible = true;
             tabItem.TabItemBody().TabItemHeader.HideButton.IsVisible = true;
-            tabItem.TabItemBody().TabItemHeader.PointerPressed += Header__PointerPressed;
+            tabItem.TabItemBody().TabItemHeader.PointerPressed += Header_PointerPressed;
             this.LostFocus += (sender, e) =>
             {
                 tabItem.TabItemHeader().Background = CurrentTheme.UnSelectedWindowHeadingBackground;
@@ -209,31 +214,31 @@ namespace ThingLing.Controls.InternalControls
             Bottom = 4
         }
 
-        private void LeftBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void LeftBorder_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Left;
             Set_Sizing();
         }
 
-        private void TopBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void TopBorder_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Top;
             Set_Sizing();
         }
 
-        private void RightBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void RightBorder_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Right;
             Set_Sizing();
         }
 
-        private void BottomBorder__PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void BottomBorder_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             _edgeType = (int)EdgeTypes.Bottom;
             Set_Sizing();
         }
 
-        private void Header__PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void Header_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             //-------------< set_Sizing() >------------- 
             var offset = e.GetPosition(HeaderBorder);

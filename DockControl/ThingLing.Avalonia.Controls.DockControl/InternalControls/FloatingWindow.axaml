@@ -12,41 +12,41 @@
     <Border x:Name="HeaderBorder"
             HorizontalAlignment="Stretch" VerticalAlignment="Top"
             Height="2" Background="Gray"
-            MouseDown="Header_MouseDown"
-            MouseEnter="Header_MouseEnter"
-            MouseLeave="Header_MouseLeave">
+            PointerPressed="Header_PointerPressed"
+            PointerEnter="Header_PointerEnter"
+            PointerLeave="Header_PointerLeave">
     </Border>
 
     <Border x:Name="LeftBorder"
             HorizontalAlignment="Left"
             VerticalAlignment="Stretch"
             Width="2" Background="Gray"
-            MouseDown="LeftBorder_MouseDown"
-            MouseEnter="LeftBorder_MouseEnter"
-            MouseLeave="Header_MouseLeave"/>
+            PointerPressed="LeftBorder_PointerPressed"
+            PointerEnter="LeftBorder_PointerEnter"
+            PointerLeave="Header_PointerLeave"/>
 
     <Border x:Name="TopBorder"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
             Height="2" Background="Gray"
-            MouseDown="TopBorder_MouseDown"
-            MouseEnter="TopBorder_MouseEnter"
-            MouseLeave="Header_MouseLeave"/>
+            PointerPressed="TopBorder_PointerPressed"
+            PointerEnter="TopBorder_PointerEnter"
+            PointerLeave="Header_PointerLeave"/>
 
     <Border x:Name="RightBorder"
             HorizontalAlignment="Right" VerticalAlignment="Stretch"
             Width="2" Background="Gray"
-            MouseDown="RightBorder_MouseDown"
-            MouseEnter="RightBorder_MouseEnter"
-            MouseLeave="Header_MouseLeave"/>
+            PointerPressed="RightBorder_PointerPressed"
+            PointerEnter="RightBorder_PointerEnter"
+            PointerLeave="Header_PointerLeave"/>
 
     <Border x:Name="BottomBorder"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom"
             Height="2" Background="Gray"
-            MouseDown="BottomBorder_MouseDown"
-            MouseEnter="BottomBorder_MouseEnter"
-            MouseLeave="Header_MouseLeave"/>
+            PointerPressed="BottomBorder_PointerPressed"
+            PointerEnter="BottomBorder_PointerEnter"
+            PointerLeave="Header_PointerLeave"/>
 
     <Grid x:Name="TabControlPanel" Margin="2,2,2,2"
           Focusable="True"

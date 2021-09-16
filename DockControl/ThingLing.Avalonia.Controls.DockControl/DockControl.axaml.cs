@@ -145,7 +145,7 @@ namespace ThingLing.Controls
             //-------------</ MouseUp() >------------- 
         }
 
-        private void MainPanel_PointerMove(object sender, PointerEventArgs e)
+        private void MainPanel_PointerMoved(object sender, PointerEventArgs e)
         {
             //------------< MouseMove() >------------ 
             if (IsSizing) Set_Sizing(e);
@@ -160,8 +160,7 @@ namespace ThingLing.Controls
             if (SizingEdgeType < 0) return;
             if (SizingPanel == null) return;
             //</ check > 
-            if (e.LeftButton != MouseButtonState.Pressed)
-            if (e.Pointer.IsPrimary && e.PointerPre)
+            if (!e.GetCurrentPoint(null).Properties.IsLeftButtonPressed)
             {
                 IsSizing = false;
             }

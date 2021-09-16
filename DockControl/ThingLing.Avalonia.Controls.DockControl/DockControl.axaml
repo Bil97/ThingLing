@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:ThingLing.Controls.InternalControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ThingLing.Controls"
-             Initialized="UserControl_Initilized"
+             x:Class="ThingLing.Controls.DockControl"
+             Initialized="UserControl_Initialized"
              >
   <Canvas x:Name="MainPanel" PointerMoved="MainPanel_PointerMoved">
     <controls:ContentControl x:Name="ContentControl"
                              Height="{Binding ElementName=MainPanel, Path=Height}"
-                             Width="{Binding ElementName=MainPanel, Path=Width}"
-                             Panel.ZIndex="0"/>
+                             Width="{Binding ElementName=MainPanel, Path=Width}" 
+                             ZIndex="0"/>
   </Canvas>
 </UserControl>
