@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>ThingLing.Controls</RootNamespace>
     <AssemblyName>ThingLing.Controls.DockControl</AssemblyName>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

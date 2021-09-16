@@ -7,6 +7,7 @@
     <RootNamespace>ThingLing.Controls</RootNamespace>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <AssemblyName>ThingLing.Controls.TabControl</AssemblyName>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
