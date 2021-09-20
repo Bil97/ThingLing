@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTestApp2" 
-        xmlns:tab="clr-namespace:ThingLing.Controls;assembly=ThingLing.Controls.TabControl"
+        xmlns:tab="clr-namespace:ThingLing.Controls;assembly=ThingLing.WPF.Controls.TabControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="MainPanel">

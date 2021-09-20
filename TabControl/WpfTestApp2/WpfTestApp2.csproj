@@ -95,9 +95,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ThingLing.WPFFramework.Controls.TabControl\ThingLing.WPFFramework.Controls.TabControl.csproj">
-      <Project>{2ef24e62-2f88-4cbc-9c20-1eb82b7e01c9}</Project>
-      <Name>ThingLing.WPFFramework.Controls.TabControl</Name>
+    <ProjectReference Include="..\ThingLing.WPF.Controls.TabControl\ThingLing.WPF.Controls.TabControl.csproj">
+      <Project>{2a47a0cc-ad97-4953-a053-9a1e82cc18bb}</Project>
+      <Name>ThingLing.WPF.Controls.TabControl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
