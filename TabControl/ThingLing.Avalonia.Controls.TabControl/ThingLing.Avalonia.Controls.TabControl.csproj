@@ -15,6 +15,9 @@
     <AvaloniaResource Include="Images\*" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaXaml Remove="App.axaml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Images\auto_hide.png" />
     <None Remove="Images\dock_menu.png" />
     <None Remove="Images\plus.png" />
