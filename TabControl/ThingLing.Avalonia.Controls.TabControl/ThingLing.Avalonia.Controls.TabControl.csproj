@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>annotations</Nullable>
     <RootNamespace>ThingLing.Controls</RootNamespace>
@@ -8,6 +8,8 @@
     <NoWin32Manifest>true</NoWin32Manifest>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <AssemblyName>ThingLing.Controls.TabControl</AssemblyName>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Images\*" />
