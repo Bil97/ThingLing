@@ -3,10 +3,9 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace ThingLing.Avalonia.Controls
+namespace ThingLing.Controls
 {
     /// <summary>
     /// Displays a message box.
@@ -32,7 +31,7 @@ namespace ThingLing.Avalonia.Controls
         /// </summary>
         /// <param name="owner">The main window that hosts this message box</param>
         /// <param name="message">A System.String that specifies the text to display.</param>
-        /// <returns>A ThingLing.Avalonia.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
         public static async Task<MessageBoxResult> ShowAsync(Window owner, string message)
         {
             MessageBoxItems(message);
@@ -46,7 +45,7 @@ namespace ThingLing.Avalonia.Controls
         /// <param name="owner">The main window that hosts this message box</param>
         /// <param name="message">A System.String that specifies the text to display.</param>
         /// <param name="title">A System.String that specifies the title bar caption to display.</param>
-        /// <returns>A ThingLing.Avalonia.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
         public static async Task<MessageBoxResult> ShowAsync(Window owner, string message, string title)
         {
             MessageBoxItems(message, title);
@@ -89,19 +88,19 @@ namespace ThingLing.Avalonia.Controls
                     break;
                 case MessageBoxImage.Error:
                     _window.IconImage.Source =
-                        LoadBitmap("avares://ThingLing.Avalonia.Controls.MessageBox/Images/delete.png");
+                        LoadBitmap("avares://ThingLing.Controls.MessageBox/Images/delete.png");
                     break;
                 case MessageBoxImage.Stop:
                     _window.IconImage.Source =
-                        LoadBitmap("avares://ThingLing.Avalonia.Controls.MessageBox/Images/No-entry.png");
+                        LoadBitmap("avares://ThingLing.Controls.MessageBox/Images/No-entry.png");
                     break;
                 case MessageBoxImage.Warning:
                     _window.IconImage.Source =
-                        LoadBitmap("avares://ThingLing.Avalonia.Controls.MessageBox/Images/Warning.png");
+                        LoadBitmap("avares://ThingLing.Controls.MessageBox/Images/Warning.png");
                     break;
                 case MessageBoxImage.Information:
                     _window.IconImage.Source =
-                        LoadBitmap("avares://ThingLing.Avalonia.Controls.MessageBox/Images/Info.png");
+                        LoadBitmap("avares://ThingLing.Controls.MessageBox/Images/Info.png");
                     break;
             }
         }
@@ -141,8 +140,8 @@ namespace ThingLing.Avalonia.Controls
         /// <param name="owner">The main window that hosts this message box</param>
         /// <param name="message">A System.String that specifies the text to display.</param>
         /// <param name="title">A System.String that specifies the title bar caption to display.</param>
-        /// <param name="button"> A ThingLing.Avalonia.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
-        /// <returns>A ThingLing.Avalonia.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        /// <param name="button"> A ThingLing.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
         public static async Task<MessageBoxResult> ShowAsync(Window owner, string message, string title,
             MessageBoxButton button)
         {
@@ -161,9 +160,9 @@ namespace ThingLing.Avalonia.Controls
         /// <param name="owner">The main window that hosts this message box</param>
         /// <param name="message">A System.String that specifies the text to display.</param>
         /// <param name="title">A System.String that specifies the title bar caption to display.</param>
-        /// <param name="button"> A ThingLing.Avalonia.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
-        /// <param name="icon"> A ThingLing.Avalonia.Controls.MessageBoxImage value that specifies the icon to display.</param>
-        /// <returns>A ThingLing.Avalonia.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        /// <param name="button"> A ThingLing.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
+        /// <param name="icon"> A ThingLing.Controls.MessageBoxImage value that specifies the icon to display.</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
         public static async Task<MessageBoxResult> ShowAsync(Window owner, string message, string title,
             MessageBoxButton button, MessageBoxImage icon)
         {
@@ -183,10 +182,10 @@ namespace ThingLing.Avalonia.Controls
         /// <param name="owner">The main window that hosts this message box</param>
         /// <param name="message">A System.String that specifies the text to display.</param>
         /// <param name="title">A System.String that specifies the title bar caption to display.</param>
-        /// <param name="button"> A ThingLing.Avalonia.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
-        /// <param name="icon"> A ThingLing.Avalonia.Controls.MessageBoxImage value that specifies the icon to display.</param>
-        /// <param name="defaultResult"> A ThingLing.Avalonia.Controls.MessageBoxResult value that specifies the default result of the message box.</param>
-        /// <returns>A ThingLing.Avalonia.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        /// <param name="button"> A ThingLing.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
+        /// <param name="icon"> A ThingLing.Controls.MessageBoxImage value that specifies the icon to display.</param>
+        /// <param name="defaultResult"> A ThingLing.Controls.MessageBoxResult value that specifies the default result of the message box.</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
         public static async Task<MessageBoxResult> ShowAsync(Window owner, string message, string title,
             MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
         {

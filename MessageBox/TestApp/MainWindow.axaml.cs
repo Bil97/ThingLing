@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using ThingLing.Avalonia.Controls;
+using ThingLing.Controls;
 
 namespace TestApp
 {

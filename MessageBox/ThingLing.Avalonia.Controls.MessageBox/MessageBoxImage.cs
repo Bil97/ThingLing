@@ -1,4 +1,4 @@
-﻿namespace ThingLing.Avalonia.Controls
+﻿namespace ThingLing.Controls
 {
     /// <summary>
     ///  Specifies the icon that is displayed by a message box.

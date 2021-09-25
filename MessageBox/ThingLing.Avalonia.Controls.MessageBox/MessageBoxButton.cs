@@ -1,4 +1,4 @@
-﻿namespace ThingLing.Avalonia.Controls
+﻿namespace ThingLing.Controls
 {
     /// <summary>
     ///     Specifies the buttons that are displayed on a message box

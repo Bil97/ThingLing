@@ -1,4 +1,4 @@
-namespace ThingLing.Avalonia.Controls
+namespace ThingLing.Controls
 {
     /// <summary>
     ///     Specifies which message box button that a user clicks.
