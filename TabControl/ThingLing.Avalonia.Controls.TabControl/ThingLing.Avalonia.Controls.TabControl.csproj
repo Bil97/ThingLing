@@ -7,9 +7,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>true</NoWin32Manifest>
     <Platforms>AnyCPU;x86;x64</Platforms>
-    <AssemblyName>ThingLing.Avalonia.Controls.TabControl</AssemblyName>
+    <AssemblyName>ThingLing.Controls.TabControl</AssemblyName>
     <ApplicationIcon />
     <StartupObject />
+    <Authors>Bil Ly</Authors>
+    <Company>ThingLing</Company>
+    <Description>Tabcontrol for avalonia</Description>
+    <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Images\*" />
@@ -21,6 +25,10 @@
     <None Remove="Images\auto_hide.png" />
     <None Remove="Images\dock_menu.png" />
     <None Remove="Images\plus.png" />
+    <None Include="..\..\LICENSE.TXT">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.3" />
