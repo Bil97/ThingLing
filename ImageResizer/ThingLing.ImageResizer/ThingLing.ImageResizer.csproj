@@ -8,6 +8,8 @@
     <Copyright>Copyright © 2021</Copyright>
     <LangVersion>Latest</LangVersion>
     <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Bil97/ThingLing/tree/main/ImageResizer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Bil97/ThingLing/tree/main/ImageResizer</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -13,6 +13,8 @@
     <Description>Tabcontrol for WPF</Description>
     <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
     <PackageId>ThingLing.WPF.Controls.TabControl</PackageId>
+    <PackageProjectUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
