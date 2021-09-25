@@ -54,7 +54,7 @@ public class Users : UserControl
 		MessageBoxResult result;
 		var task = new Task(async () =>
 		{
-          var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+			var desktop = (IClassicDesktopStyleApplicationLifetime)Avalonia.Application.Current.ApplicationLifetime;
 			result = await MessageBox.ShowAsync(desktop.MainWindow, "Hello world message", "Title", MessageBoxButton.YesNoCancel,MessageBoxImage.Warning);
 
 			textBlock.Text=result.ToString();
@@ -65,7 +65,7 @@ public class Users : UserControl
 
 	async OnClick(object sender, RoutedEventArgs e)
 	{
-       var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+		var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
 		var mb = await MessageBox.ShowAsync(desktop.MainWindow, "Hello world, this message box is working fine", "Hello title", MessageBoxButton.OKCancel, MessageBoxImage.Information);
 		this.FindControl<TextBlock>("result").Text = mb.ToString();
 	}
