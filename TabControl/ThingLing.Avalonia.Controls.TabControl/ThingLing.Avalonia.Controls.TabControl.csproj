@@ -14,6 +14,9 @@
     <Company>ThingLing</Company>
     <Description>Tabcontrol for avalonia</Description>
     <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageId>ThingLing.Avalonia.Controls.TabControl</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Images\*" />

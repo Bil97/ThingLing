@@ -12,6 +12,7 @@
     <Company>ThingLing</Company>
     <Description>Tabcontrol for WPF</Description>
     <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+    <PackageId>ThingLing.WPF.Controls.TabControl</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
