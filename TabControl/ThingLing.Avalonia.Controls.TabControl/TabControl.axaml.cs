@@ -64,7 +64,7 @@ namespace ThingLing.Controls
         public Panel ParentPanel { get; set; }
 
         /// <summary>
-        /// The parent to this TabControl thet is removed when the close button is clicked from the specified parent
+        /// The parent to this TabControl that is removed when the close button is clicked from the specified parent
         /// </summary>
 
         public Control TabControlParent { get; set; }

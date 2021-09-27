@@ -63,7 +63,7 @@ namespace ThingLing.Controls
         public Panel ParentPanel { get; set; }
 
         /// <summary>
-        /// The parent to this TabControl thet is removed when the close button is clicked from the specified parent
+        /// The parent to this TabControl that is removed when the close button is clicked from the specified parent
         /// </summary>
 
         public UIElement TabControlParent { get; set; }
@@ -98,7 +98,7 @@ namespace ThingLing.Controls
         private TabControlTheme theme;
 
         /// <summary>
-        /// Deteimes whether to collase this TabControl's visibility when it has no TabItem
+        /// Determines whether to collapse this TabControl's visibility when it has no TabItem
         /// </summary>
         public bool CollapseVisibilityWhenEmpty { get; set; }
 
@@ -409,7 +409,7 @@ namespace ThingLing.Controls
         }
 
         /// <summary>
-        /// This event is fird when the NewTabItemButton is clicked
+        /// This event is fired when the NewTabItemButton is clicked
         /// </summary>
         public event Action NewTabItemButtonClicked;
         private void NewTabItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -82,7 +82,7 @@ namespace ThingLing.Controls
         }
 
         /// <summary>
-        /// Indicates whether change has occured in the TabItem body. It is show by a * in the TabItem header
+        /// Indicates whether change has occurred in the TabItem body. It is show by a * in the TabItem header
         /// </summary>
         public bool ContentChanged
         {

@@ -15,7 +15,7 @@
         <Button Content="Click Me" Click="Button_Click" Grid.Row="1"/>
 
         <tab:TabControl x:Name="_tabControl"
-                        TabMode="Document"
+                        TabMode="Document" TabStripPlacementSide="Bottom"
                         />
     </Grid>
 </Window>
