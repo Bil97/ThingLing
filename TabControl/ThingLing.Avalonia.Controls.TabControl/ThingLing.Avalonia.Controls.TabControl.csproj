@@ -19,6 +19,7 @@
     <PackageId>ThingLing.Avalonia.Controls.TabControl</PackageId>
     <PackageProjectUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</RepositoryUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Images\*" />
