@@ -6,9 +6,9 @@
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.7" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.7" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.7" />
+    <PackageReference Include="Avalonia" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.10" />
    </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThingLing.Avalonia.Controls.MessageBox\ThingLing.Avalonia.Controls.MessageBox.csproj" />
