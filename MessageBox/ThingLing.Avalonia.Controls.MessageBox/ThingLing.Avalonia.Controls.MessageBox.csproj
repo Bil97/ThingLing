@@ -1,22 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Title>ThingLing.Controls.MessageBox</Title>
     <Authors>Bil Ly</Authors>
     <Description>Displays a message box. It is a normal Avalonia window customized to be used as a simple dialog to accept Yes, No, Ok, Cancel and None responses from the user.</Description>
     <Copyright>Copyright © 2021</Copyright>
-    <PackageProjectUrl>https://github.com/Bil97/MessageBox</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Bil97/MessageBox</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Bil97/ThingLing/tree/main/MessageBox</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Bil97/ThingLing/tree/main/MessageBox</RepositoryUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RootNamespace>ThingLing.Controls</RootNamespace>
     <Company>ThingLing</Company>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
     <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
     <AssemblyName>ThingLing.Controls.MessageBox</AssemblyName>
     <PackageId>ThingLing.Avalonia.Controls.MessageBox</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
@@ -28,6 +29,10 @@
     <None Include="..\..\LICENSE.TXT">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 </Project>
