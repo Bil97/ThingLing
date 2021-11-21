@@ -10,12 +10,16 @@ using ThingLing.Controls;
 **Without result:**
 
 ```c#
+MessageBox.ShowAsync(message);
+// Or with a custom window
 MessageBox.ShowAsync(owner window, message);
 ```
 
-**//OR**
+**OR**
 
 ```c#
+await MessageBox.ShowAsync(message);
+// Or with a custom window
 await MessageBox.ShowAsync(owner window, message);
 ```
 
@@ -24,7 +28,15 @@ await MessageBox.ShowAsync(owner window, message);
 **from async method:**
 
 ```c#
+var mb = await MessageBox.ShowAsync("Hello world, this message box is working fine", "Hello title", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+
+// Or with a class that inherits from _Window_
 var mb = await MessageBox.ShowAsync(this, "Hello world, this message box is working fine", "Hello title", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+
+// Or with a custom window
+var window = new Window();
+var mb = await MessageBox.ShowAsync(window, "Hello world, this message box is working fine", "Hello title", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+
 this.FindControl<TextBlock>("result").Text = mb.ToString();
 ```
 
@@ -35,41 +47,16 @@ TextBlock textBlock = new TextBlock;
 MessageBoxResult result;
 var task = new Task(async () =>
 {
+    result = await MessageBox.ShowAsync("Hello world message", "Title", MessageBoxButton.YesNoCancel,MessageBoxImage.Warning);
+
+// Or with a class that inherits from _window_
     result = await MessageBox.ShowAsync(this, "Hello world message", "Title", MessageBoxButton.YesNoCancel,MessageBoxImage.Warning);
+    textBlock.Text=result.ToString();
+
+// Or with a custom window
+   var window = new Window();
+    result = await MessageBox.ShowAsync(window, "Hello world message", "Title", MessageBoxButton.YesNoCancel,MessageBoxImage.Warning);
     textBlock.Text=result.ToString();
 });
 task.RunSynchronously();
 ```
-
-**from a class that does not inherit from window:**
-
-```c#
-public class Users : UserControl
-{
-	public Users()
-	{
-		InitializeComponent();
-
-		TextBlock textBlock = new TextBlock;
-		MessageBoxResult result;
-		var task = new Task(async () =>
-		{
-			var desktop = (IClassicDesktopStyleApplicationLifetime)Avalonia.Application.Current.ApplicationLifetime;
-			result = await MessageBox.ShowAsync(desktop.MainWindow, "Hello world message", "Title", MessageBoxButton.YesNoCancel,MessageBoxImage.Warning);
-
-			textBlock.Text=result.ToString();
-		});
-	}
-
-	//// OR from async method
-
-	async OnClick(object sender, RoutedEventArgs e)
-	{
-		var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
-		var mb = await MessageBox.ShowAsync(desktop.MainWindow, "Hello world, this message box is working fine", "Hello title", MessageBoxButton.OKCancel, MessageBoxImage.Information);
-		this.FindControl<TextBlock>("result").Text = mb.ToString();
-	}
-
-}
-```
-

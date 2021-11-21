@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using System;
@@ -17,13 +18,26 @@ namespace ThingLing.Controls
 
         private static void MessageBoxItems(string message, string title = "")
         {
-            _window = new MainWindow {MessageTextBlock = {Text = message}, TitleTextBlock = {Text = title}};
+            _window = new MainWindow { MessageTextBlock = { Text = message }, TitleTextBlock = { Text = title } };
         }
 
         private static IBitmap LoadBitmap(string uri)
         {
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
             return new Bitmap(assets.Open(new Uri(uri)));
+        }
+
+        /// <summary>
+        ///  Displays a message box that has a message and that returns a result.
+        /// </summary>
+        /// <param name="message">A System.String that specifies the text to display.</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        public static async Task<MessageBoxResult> ShowAsync(string message)
+        {
+            MessageBoxItems(message);
+            var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+            await _window.ShowDialog(desktop.MainWindow);
+            return _window.MessageBoxResult;
         }
 
         /// <summary>
@@ -36,6 +50,20 @@ namespace ThingLing.Controls
         {
             MessageBoxItems(message);
             await _window.ShowDialog(owner);
+            return _window.MessageBoxResult;
+        }
+
+        /// <summary>
+        /// Displays a message box that has a message and title bar caption; and that returns a result.
+        /// </summary>
+        /// <param name="message">A System.String that specifies the text to display.</param>
+        /// <param name="title">A System.String that specifies the title bar caption to display.</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        public static async Task<MessageBoxResult> ShowAsync(string message, string title)
+        {
+            MessageBoxItems(message, title);
+            var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+            await _window.ShowDialog(desktop.MainWindow);
             return _window.MessageBoxResult;
         }
 
@@ -137,6 +165,26 @@ namespace ThingLing.Controls
         /// <summary>
         /// Displays a message box that has a message and title bar caption; and that returns a result.
         /// </summary>
+        /// <param name="message">A System.String that specifies the text to display.</param>
+        /// <param name="title">A System.String that specifies the title bar caption to display.</param>
+        /// <param name="button"> A ThingLing.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        public static async Task<MessageBoxResult> ShowAsync(string message, string title,
+            MessageBoxButton button)
+        {
+            MessageBoxItems(message, title);
+
+            _window.OkButton.IsVisible = false;
+            MessageBoxButtonMethod(button);
+
+            var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+            await _window.ShowDialog(desktop.MainWindow);
+            return _window.MessageBoxResult;
+        }
+
+        /// <summary>
+        /// Displays a message box that has a message and title bar caption; and that returns a result.
+        /// </summary>
         /// <param name="owner">The main window that hosts this message box</param>
         /// <param name="message">A System.String that specifies the text to display.</param>
         /// <param name="title">A System.String that specifies the title bar caption to display.</param>
@@ -151,6 +199,28 @@ namespace ThingLing.Controls
             MessageBoxButtonMethod(button);
 
             await _window.ShowDialog(owner);
+            return _window.MessageBoxResult;
+        }
+
+        /// <summary>
+        /// Displays a message box that has a message and title bar caption; and that returns a result.
+        /// </summary>
+        /// <param name="message">A System.String that specifies the text to display.</param>
+        /// <param name="title">A System.String that specifies the title bar caption to display.</param>
+        /// <param name="button"> A ThingLing.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
+        /// <param name="icon"> A ThingLing.Controls.MessageBoxImage value that specifies the icon to display.</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        public static async Task<MessageBoxResult> ShowAsync(string message, string title,
+            MessageBoxButton button, MessageBoxImage icon)
+        {
+            MessageBoxItems(message, title);
+
+            _window.OkButton.IsVisible = false;
+            MessageBoxButtonMethod(button);
+            MessageBoxImageMethod(icon);
+
+            var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+            await _window.ShowDialog(desktop.MainWindow);
             return _window.MessageBoxResult;
         }
 
@@ -173,6 +243,33 @@ namespace ThingLing.Controls
             MessageBoxImageMethod(icon);
 
             await _window.ShowDialog(owner);
+            return _window.MessageBoxResult;
+        }
+
+        /// <summary>
+        /// Displays a message box that has a message and title bar caption; and that returns a result.
+        /// </summary>
+        /// <param name="message">A System.String that specifies the text to display.</param>
+        /// <param name="title">A System.String that specifies the title bar caption to display.</param>
+        /// <param name="button"> A ThingLing.Controls.MessageBoxButton value that specifies which button or buttons to display</param>
+        /// <param name="icon"> A ThingLing.Controls.MessageBoxImage value that specifies the icon to display.</param>
+        /// <param name="defaultResult"> A ThingLing.Controls.MessageBoxResult value that specifies the default result of the message box.</param>
+        /// <returns>A ThingLing.Controls.MessageBoxResult value that specifies which message box button is clicked by the user.</returns>
+        public static async Task<MessageBoxResult> ShowAsync(string message, string title,
+            MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
+        {
+            MessageBoxItems(message, title);
+
+            _window.OkButton.IsVisible = false;
+            MessageBoxButtonMethod(button);
+            MessageBoxImageMethod(icon);
+
+            _window.OkButton.IsDefault = false;
+
+            MessageBoxResultMethod(defaultResult);
+
+            var desktop = (IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime;
+            await _window.ShowDialog(desktop.MainWindow);
             return _window.MessageBoxResult;
         }
 
