@@ -30,7 +30,7 @@ await MessageBox.ShowAsync(owner window, message);
 ```c#
 var mb = await MessageBox.ShowAsync("Hello world, this message box is working fine", "Hello title", MessageBoxButton.OKCancel, MessageBoxImage.Information);
 
-// Or with a class that inherits from _Window_
+// Or with a class that inherits from Window
 var mb = await MessageBox.ShowAsync(this, "Hello world, this message box is working fine", "Hello title", MessageBoxButton.OKCancel, MessageBoxImage.Information);
 
 // Or with a custom window
@@ -49,7 +49,7 @@ var task = new Task(async () =>
 {
     result = await MessageBox.ShowAsync("Hello world message", "Title", MessageBoxButton.YesNoCancel,MessageBoxImage.Warning);
 
-// Or with a class that inherits from _window_
+// Or with a class that inherits from window
     result = await MessageBox.ShowAsync(this, "Hello world message", "Title", MessageBoxButton.YesNoCancel,MessageBoxImage.Warning);
     textBlock.Text=result.ToString();
 
