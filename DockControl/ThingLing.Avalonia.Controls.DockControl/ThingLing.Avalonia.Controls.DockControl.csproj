@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>ThingLing.Controls</RootNamespace>
     <AssemblyName>ThingLing.Controls.DockControl</AssemblyName>
@@ -21,9 +21,9 @@
     <AvaloniaResource Include="Images\*" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.3" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.3" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.3" />
+    <PackageReference Include="Avalonia" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.10" />
    </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\TabControl\ThingLing.Avalonia.Controls.TabControl\ThingLing.Avalonia.Controls.TabControl.csproj" />
