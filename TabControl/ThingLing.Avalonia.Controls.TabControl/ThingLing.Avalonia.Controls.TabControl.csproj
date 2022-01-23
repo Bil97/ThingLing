@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>annotations</Nullable>
     <RootNamespace>ThingLing.Controls</RootNamespace>
@@ -25,9 +25,6 @@
     <AvaloniaResource Include="Images\*" />
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaXaml Remove="App.axaml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Images\auto_hide.png" />
     <None Remove="Images\dock_menu.png" />
     <None Remove="Images\plus.png" />
@@ -40,7 +37,7 @@
     <PackageReference Include="Avalonia" Version="0.10.10" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.10" />
-    <PackageReference Include="ThingLing.Avalonia.Controls.MessageBox" Version="1.0.2" />
+    <PackageReference Include="ThingLing.Avalonia.Controls.MessageBox" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\dock_menu.png" />

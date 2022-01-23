@@ -19,6 +19,12 @@ namespace ThingLing.Controls
             Window = this;
 
             tab = this.FindControl<TabControl>("tab");
+            tab.NewTabItemButtonClicked+= NewTabItemButton_Clicked;
+        }
+
+        private void NewTabItemButton_Clicked()
+        {
+            Click();
         }
 
         private void InitializeComponent()
@@ -26,17 +32,22 @@ namespace ThingLing.Controls
             AvaloniaXamlLoader.Load(this);
         }
 
-        private int i;
+        private int _i;
        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var tabItem = new TabItem
-            {
-                Header = $"Hello TextBox {++i}",
-                Content = new TextBox { Text = $"Helloo {i}", TextWrapping = TextWrapping.Wrap },
-                ToolTip = $"RichTextBox {i}"
-            };
-            tab.Add(tabItem);
+         Click();   
         }
+
+       void Click()
+       {
+           var tabItem = new TabItem
+           {
+               Header = $"Hello TextBox {++_i}",
+               Content = new TextBox { Text = $"Hello {_i}", TextWrapping = TextWrapping.Wrap },
+               ToolTip = $"RichTextBox {_i}"
+           };
+           tab.Add(tabItem);
+       }
 
     }
 }

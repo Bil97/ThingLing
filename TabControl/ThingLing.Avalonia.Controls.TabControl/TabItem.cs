@@ -19,20 +19,20 @@ namespace ThingLing.Controls
         private Control _content;
         private Brush _tabItemBodyBackground;
         private static Brush _tabItemBodyForeground;
-        private string header;
-        private Image contentIcon;
-        private string toolTip;
-        private bool contentChanged;
+        private string _header;
+        private Image _contentIcon;
+        private string _toolTip;
+        private bool _contentChanged;
 
         /// <summary>
         /// Holds the Title text of the TabItem
         /// </summary>
         public string Header
         {
-            get => header;
+            get => _header;
             set
             {
-                header = value;
+                _header = value;
                 _tabItemHeader.Header.Text = value;
                 _tabItemBody.TabItemHeader.Header.Text = value;
             }
@@ -43,10 +43,10 @@ namespace ThingLing.Controls
         /// </summary>
         public Image ContentIcon
         {
-            get => contentIcon;
+            get => _contentIcon;
             set
             {
-                contentIcon = value;
+                _contentIcon = value;
                 _tabItemHeader.ContentIcon = value;
                 _tabItemBody.TabItemHeader.ContentIcon = value;
             }
@@ -57,10 +57,10 @@ namespace ThingLing.Controls
         /// </summary>
         public string ToolTip
         {
-            get => toolTip;
+            get => _toolTip;
             set
             {
-                toolTip = value;
+                _toolTip = value;
                 Tool_Tip.SetTip(_tabItemHeader, value);
                 Tool_Tip.SetTip(_tabItemBody.TabItemHeader, value);
             }
@@ -86,10 +86,10 @@ namespace ThingLing.Controls
         /// </summary>
         public bool ContentChanged
         {
-            get => contentChanged;
+            get => _contentChanged;
             set
             {
-                contentChanged = value;
+                _contentChanged = value;
                 _tabItemHeader.ContentChanged.IsVisible = value;
                 _tabItemBody.TabItemHeader.ContentChanged.IsVisible = value;
             }
@@ -188,7 +188,7 @@ namespace ThingLing.Controls
         {
             _tabItemBody.TabItemHeader.ContentIcon = ContentIcon;
             _tabItemBody.TabItemHeader.Header.Text = Header;
-            Tool_Tip.SetTip(_tabItemBody, ToolTip);
+            Tool_Tip.SetTip(_tabItemBody.TabItemHeader.Header, ToolTip);
             _tabItemBody.TabItemHeader.ContentChanged.IsVisible = ContentChanged;
             _tabItemBody.TabItemHeader.Background = BackgroundWhenFocused;
             _tabItemBody.TabItemHeader.Foreground = ForegroundWhenFocused;

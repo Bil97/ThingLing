@@ -7,6 +7,7 @@ using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using ThingLing.Controls.Methods;
 using ThingLing.Controls.Props;
 
@@ -44,10 +45,10 @@ namespace ThingLing.Controls
         /// </summary>
         public TabItem SelectedTabItem
         {
-            get => selectedTabItem;
+            get => _selectedTabItem;
             set
             {
-                selectedTabItem = value;
+                _selectedTabItem = value;
                 FocusThisTabItem(value);
             }
         }
@@ -72,21 +73,23 @@ namespace ThingLing.Controls
         /// <summary>
         /// Provides context menu to the Hide button
         /// </summary>
-
-
         /// <summary>
         /// Provides the colors used to decorate the this TabControl
         /// </summary>
 
         public TabControlTheme Theme
         {
-            get => theme;
+            get => _theme;
             set
             {
-                theme = value;
+                _theme = value;
                 _ = new LoadTheme(value);
             }
         }
+
+        /// <summary>
+        /// Provides context menu to the Hide button
+        /// </summary>
         public static ContextMenu HideContextMenu { get; set; }
 
         internal readonly List<TabItem> TabItems = new();
@@ -95,6 +98,9 @@ namespace ThingLing.Controls
         /// Holds the index of the current focused TabItem in this TabControl
         /// </summary>
         internal int tabIndex = -1;
+
+        private TabItem _selectedTabItem;
+        private TabControlTheme _theme;
 
         /// <summary>
         /// Determines whether to collapse this TabControl's visibility when it has no TabItem
@@ -106,6 +112,7 @@ namespace ThingLing.Controls
         /// Determines whether to collapse the AddItem Button
         /// </summary>
         public bool HideNewTabButton { get; set; }
+
         /// <summary>
         /// Determines whether to collapse the OpenTabs button
         /// </summary>
@@ -128,8 +135,6 @@ namespace ThingLing.Controls
         internal StackPanel HeaderPanel;
         internal Border SeparatorBorder;
         internal Grid ContentPanel;
-        private TabItem selectedTabItem;
-        private TabControlTheme theme;
 
         private void InitializeComponent()
         {
@@ -203,9 +208,10 @@ namespace ThingLing.Controls
 
             tabItem.TabItemHeader().PointerPressed += TabItem_MouseDown;
             tabItem.TabItemBody().PointerPressed += TabItem_MouseDown;
+
             void TabItem_MouseDown(object sender, PointerPressedEventArgs e)
             {
-                SelectedTabItem = tabItem;
+                Click();
             }
 
             ++tabIndex;
@@ -215,17 +221,17 @@ namespace ThingLing.Controls
                     // Do not mess this order
                     TabStripPlacementSide ??= TabStripPlacement.Top;
                     TabStrip_Placement();
-                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double)TabItemRotationAngle);
+                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double) TabItemRotationAngle);
                     HeaderPanel.Children.Insert(tabIndex, tabItem.TabItemHeader());
                     ContentPanel.Children.Insert(tabIndex, tabItem.Content);
-
                     break;
                 case TabMode.Window:
                     // Do not mess this order
                     TabStripPlacementSide ??= TabStripPlacement.Bottom;
                     TabStrip_Placement();
-                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double)TabItemRotationAngle);
-                    tabItem.TabItemHeader().CloseButton.IsVisible = false; ;
+                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double) TabItemRotationAngle);
+                    tabItem.TabItemHeader().CloseButton.IsVisible = false;
+                    ;
                     HeaderPanel.Children.Insert(tabIndex, tabItem.TabItemHeader());
                     tabItem.TabItemBody().ContentPanel.Child = tabItem.Content;
                     ContentPanel.Children.Insert(tabIndex, tabItem.TabItemBody());
@@ -241,14 +247,13 @@ namespace ThingLing.Controls
                 TabItems.Insert(0, tabItem);
             }
 
-            tabItem.Content ??= ErrorMessage.EmptyContent;
-            tabItem.Content.GotFocus += (sender, e) => { SelectedTabItem = tabItem; };
-            tabItem.TabItemHeader().PointerReleased += (sender, e) => { Click(); };
+            tabItem.Content.GotFocus += (sender, e) => { Click(); };
 
             // Select a TabItem
             SelectedTabItem = tabItem;
 
             TabItems.Insert(0, tabItem);
+
             ContentPanel.Children[tabIndex].Focus();
 
             LayoutChanged();
@@ -263,8 +268,8 @@ namespace ThingLing.Controls
         {
             foreach (var child in HeaderPanel.Children)
             {
-                ((TabItemHeader)child).Background = tabItem.BackgroundWhenUnFocused;
-                ((TabItemHeader)child).Foreground = tabItem.ForegroundWhenUnFocused;
+                ((TabItemHeader) child).Background = tabItem.BackgroundWhenUnFocused;
+                ((TabItemHeader) child).Foreground = tabItem.ForegroundWhenUnFocused;
             }
 
             foreach (Control child in ContentPanel.Children)
@@ -275,11 +280,11 @@ namespace ThingLing.Controls
 
             tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
 
-            var element = (TabItemHeader)HeaderPanel.Children[tabIndex];
+            var element = (TabItemHeader) HeaderPanel.Children[tabIndex];
             element.Background = tabItem.BackgroundWhenFocused;
             element.Foreground = tabItem.ForegroundWhenFocused;
             ContentPanel.Children[tabIndex].IsVisible = true;
-            element.BringIntoView(new Rect(new Size(element.MaxWidth, element.MaxHeight)));
+            element.BringIntoView(new Rect(new Size(element.Bounds.Width, element.Bounds.Height)));
         }
 
         /// <summary>
@@ -295,17 +300,12 @@ namespace ThingLing.Controls
         {
             var _tabItem = TabItems.FirstOrDefault(i => i == tabItem);
 
-            if (_tabItem != null)
-            {
-                HeaderPanel.Children.Remove(_tabItem.TabItemHeader());
-                if (TabMode == TabMode.Document)
-                    ContentPanel.Children.Remove(_tabItem.Content);
-                else
-                    ContentPanel.Children.Remove(_tabItem.TabItemBody());
-                TabItems.Remove(tabItem);
-                LayoutChanged();
-                TabItemRemoved?.Invoke(tabItem);
-            }
+            if (_tabItem == null) return;
+            HeaderPanel.Children.Remove(_tabItem.TabItemHeader());
+            ContentPanel.Children.Remove(TabMode == TabMode.Document ? _tabItem.Content : _tabItem.TabItemBody());
+            TabItems.Remove(tabItem);
+            LayoutChanged();
+            TabItemRemoved?.Invoke(tabItem);
         }
 
         /// <summary>
@@ -315,15 +315,13 @@ namespace ThingLing.Controls
         public void RemoveAt(int tabIndex)
         {
             var _tabIndex = Math.Abs(tabIndex);
-            if (TabItems.Count >= _tabIndex)
-            {
-                ContentPanel.Children.RemoveAt(_tabIndex);
-                HeaderPanel.Children.RemoveAt(_tabIndex);
-                var tabItem = TabItems[_tabIndex];
-                TabItemRemoved?.Invoke(tabItem);
-                TabItems.RemoveAt(_tabIndex);
-                LayoutChanged();
-            }
+            if (TabItems.Count < _tabIndex) return;
+            ContentPanel.Children.RemoveAt(_tabIndex);
+            HeaderPanel.Children.RemoveAt(_tabIndex);
+            var tabItem = TabItems[_tabIndex];
+            TabItemRemoved?.Invoke(tabItem);
+            TabItems.RemoveAt(_tabIndex);
+            LayoutChanged();
         }
 
         /// <summary>
@@ -337,12 +335,14 @@ namespace ThingLing.Controls
             {
                 TabItemRemoved?.Invoke(tabItem);
             }
+
             TabItems.Clear();
             LayoutChanged();
         }
 
         private void OpenTabs_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
+            if (e.InitialPressMouseButton != MouseButton.Left) return;
             var menuItems = new List<MenuItem>();
             foreach (var tabItem in TabItems)
             {
@@ -355,8 +355,8 @@ namespace ThingLing.Controls
                 {
                     foreach (var child in HeaderPanel.Children)
                     {
-                        ((TabItemHeader)child).Background = tabItem.BackgroundWhenUnFocused;
-                        ((TabItemHeader)child).Foreground = tabItem.ForegroundWhenUnFocused;
+                        ((TabItemHeader) child).Background = tabItem.BackgroundWhenUnFocused;
+                        ((TabItemHeader) child).Foreground = tabItem.ForegroundWhenUnFocused;
                     }
 
                     foreach (var child in ContentPanel.Children)
@@ -364,12 +364,12 @@ namespace ThingLing.Controls
                         child.IsVisible = false;
                     }
 
-                    var tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
-                    ((TabItemHeader)HeaderPanel.Children[tabIndex]).Background = tabItem.BackgroundWhenFocused;
-                    ((TabItemHeader)HeaderPanel.Children[tabIndex]).Foreground = tabItem.ForegroundWhenFocused;
-                    var element = (TabItemHeader)HeaderPanel.Children[tabIndex];
+                    tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
+                    ((TabItemHeader) HeaderPanel.Children[tabIndex]).Background = tabItem.BackgroundWhenFocused;
+                    ((TabItemHeader) HeaderPanel.Children[tabIndex]).Foreground = tabItem.ForegroundWhenFocused;
+                    var element = (TabItemHeader) HeaderPanel.Children[tabIndex];
 
-                    element.BringIntoView(new Rect(new Size(element.Width, element.Height)));
+                    element.BringIntoView(new Rect(new Size(element.Bounds.Width, element.Bounds.Height)));
 
                     ContentPanel.Children[tabIndex].IsVisible = true;
                     ContentPanel.Children[tabIndex].Focus();
@@ -380,14 +380,11 @@ namespace ThingLing.Controls
                 menuItems.Add(menuItem);
             }
 
-            var contextMenu = new ContextMenu { Items = menuItems };
-            ((Image)sender).ContextMenu = contextMenu;
+            var contextMenu = new ContextMenu {Items = menuItems};
+            ((Image) sender).ContextMenu = contextMenu;
 
-            if (e.InitialPressMouseButton == MouseButton.Left)
-            {
-                contextMenu.Open();
-                e.Handled = true;
-            }
+            contextMenu.Open();
+            e.Handled = true;
         }
 
         /// <summary>
@@ -399,8 +396,7 @@ namespace ThingLing.Controls
             switch (TabItemsCount)
             {
                 case 0:
-                    if (AlwaysVisible) IsVisible = true;
-                    else IsVisible = false;
+                    IsVisible = AlwaysVisible;
 
                     if (ParentPanel != null && TabControlParent != null)
                         ParentPanel.Children.Remove(TabControlParent);
@@ -420,6 +416,7 @@ namespace ThingLing.Controls
                             TabStrip.IsVisible = false;
                         }
                     }
+
                     break;
                 default:
                     if (ContentPanel.Children.Count > 1)
@@ -428,8 +425,10 @@ namespace ThingLing.Controls
                         SeparatorBorder.IsVisible = true;
                         TabStrip.IsVisible = true;
                     }
+
                     break;
             }
+
             TabItemsCount = ContentPanel.Children.Count;
         }
 
@@ -437,10 +436,10 @@ namespace ThingLing.Controls
         /// This event is fired when the NewTabItemButton is clicked
         /// </summary>
         public event Action NewTabItemButtonClicked;
+
         private void NewTabItem_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
             NewTabItemButtonClicked?.Invoke();
         }
-
     }
 }

@@ -5,29 +5,31 @@
              mc:Ignorable="d"
              x:Class="ThingLing.Controls.TabControl"
              Focusable="True">
-  <UserControl.Styles>
-    <StyleInclude Source="/Resources/MyStyles.axaml" />
-  </UserControl.Styles>
+    <UserControl.Styles>
+        <StyleInclude Source="/Resources/MyStyles.axaml" />
+    </UserControl.Styles>
 
-  <DockPanel>
-    <DockPanel x:Name="TabStrip" DockPanel.Dock="Top">
-      <Image x:Name="DocMenu" Source="avares://ThingLing.Controls.TabControl/Images/dock_menu.png" DockPanel.Dock="Right"
-             ToolTip.Tip="Show Open Tabs" 
-             Margin="5,2"
-             Classes="header"
-             PointerReleased="OpenTabs_PointerReleased" />
-      <Image x:Name="NewTabItem" Source="avares://ThingLing.Controls.TabControl/Images/plus.png" DockPanel.Dock="Right"
-             ToolTip.Tip="Add New Tab" Classes="header"
-             Margin="5,2" 
-             PointerReleased="NewTabItem_PointerReleased"/>
-      <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                    VerticalScrollBarVisibility="Hidden">
-        <StackPanel x:Name="HeaderPanel" Orientation="Horizontal" />
-      </ScrollViewer>
+    <DockPanel>
+        <DockPanel x:Name="TabStrip" DockPanel.Dock="Top">
+            <Image x:Name="DocMenu" Source="avares://ThingLing.Controls.TabControl/Images/dock_menu.png"
+                   DockPanel.Dock="Right"
+                   ToolTip.Tip="Show Open Tabs"
+                   Margin="5,2"
+                   Classes="header"
+                   PointerReleased="OpenTabs_PointerReleased" />
+            <Image x:Name="NewTabItem" Source="avares://ThingLing.Controls.TabControl/Images/plus.png"
+                   DockPanel.Dock="Right"
+                   ToolTip.Tip="Add New Tab" Classes="header"
+                   Margin="5,2"
+                   PointerReleased="NewTabItem_PointerReleased" />
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden">
+                <StackPanel x:Name="HeaderPanel" Orientation="Horizontal" />
+            </ScrollViewer>
+        </DockPanel>
+
+        <Border x:Name="SeparatorBorder" DockPanel.Dock="Top"
+                BorderThickness="1" HorizontalAlignment="Stretch" />
+        <Grid x:Name="ContentPanel" x:FieldModifier="public" />
     </DockPanel>
-
-    <Border x:Name="SeparatorBorder" DockPanel.Dock="Top"
-            BorderThickness="1" HorizontalAlignment="Stretch" />
-    <Grid x:Name="ContentPanel" />
-  </DockPanel>
 </UserControl>

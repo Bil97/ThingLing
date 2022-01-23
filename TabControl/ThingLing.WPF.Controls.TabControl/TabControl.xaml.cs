@@ -43,10 +43,10 @@ namespace ThingLing.Controls
         /// </summary>
         public TabItem SelectedTabItem
         {
-            get => selectedTabItem;
+            get => _selectedTabItem;
             set
             {
-                selectedTabItem = value;
+                _selectedTabItem = value;
                 FocusThisTabItem(value);
             }
         }
@@ -74,10 +74,10 @@ namespace ThingLing.Controls
 
         public TabControlTheme Theme
         {
-            get => theme;
+            get => _theme;
             set
             {
-                theme = value;
+                _theme = value;
                 _ = new LoadTheme(value);
             }
         }
@@ -94,14 +94,9 @@ namespace ThingLing.Controls
         /// Holds the index of the current focused TabItem in this TabControl
         /// </summary>
         internal int tabIndex = -1;
-        private TabItem selectedTabItem;
-        private TabControlTheme theme;
-
-        /// <summary>
-        /// Determines whether to collapse this TabControl's visibility when it has no TabItem
-        /// </summary>
-        public bool CollapseVisibilityWhenEmpty { get; set; }
-
+        private TabItem _selectedTabItem;
+        private TabControlTheme _theme;
+        
         /// <summary>
         /// Determines whether to collapse this TabControl's visibility when it has no TabItem
         /// and also whether keep showing the NewTabButton Button and the OpenTabs button when this TabControl has one or no child
@@ -186,7 +181,7 @@ namespace ThingLing.Controls
             tabItem.TabItemBody().MouseDown += TabItem_MouseDown;
             void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
             {
-                this.SelectedTabItem = tabItem;
+                Click();
             }
 
             ++tabIndex;
@@ -221,8 +216,7 @@ namespace ThingLing.Controls
                 TabItems.Insert(0, tabItem);
             }
 
-            tabItem.Content.GotFocus += (sender, e) => { SelectedTabItem = tabItem; };
-            tabItem.TabItemHeader().MouseLeftButtonUp += (sender, e) => { Click(); };
+            tabItem.Content.GotFocus += (sender, e) => { Click(); };
 
             // Select a TabItem
             this.SelectedTabItem = tabItem;
@@ -274,17 +268,12 @@ namespace ThingLing.Controls
         {
             var _tabItem = TabItems.FirstOrDefault(i => i == tabItem);
 
-            if (_tabItem != null)
-            {
-                HeaderPanel.Children.Remove(_tabItem.TabItemHeader());
-                if (TabMode == TabMode.Document)
-                    ContentPanel.Children.Remove(_tabItem.Content);
-                else
-                    ContentPanel.Children.Remove(_tabItem.TabItemBody());
-                TabItems.Remove(tabItem);
-                LayoutChanged();
-                TabItemRemoved?.Invoke(tabItem);
-            }
+            if (_tabItem == null) return;
+            HeaderPanel.Children.Remove(_tabItem.TabItemHeader());
+            ContentPanel.Children.Remove(TabMode == TabMode.Document ? _tabItem.Content : _tabItem.TabItemBody());
+            TabItems.Remove(tabItem);
+            LayoutChanged();
+            TabItemRemoved?.Invoke(tabItem);
         }
 
         /// <summary>
@@ -294,15 +283,13 @@ namespace ThingLing.Controls
         public void RemoveAt(int tabIndex)
         {
             var _tabIndex = Math.Abs(tabIndex);
-            if (TabItems.Count >= _tabIndex)
-            {
-                ContentPanel.Children.RemoveAt(_tabIndex);
-                HeaderPanel.Children.RemoveAt(_tabIndex);
-                TabItems.RemoveAt(_tabIndex);
-                var tabItem = TabItems[_tabIndex];
-                TabItemRemoved?.Invoke(tabItem);
-                LayoutChanged();
-            }
+            if (TabItems.Count < _tabIndex) return;
+            ContentPanel.Children.RemoveAt(_tabIndex);
+            HeaderPanel.Children.RemoveAt(_tabIndex);
+            TabItems.RemoveAt(_tabIndex);
+            var tabItem = TabItems[_tabIndex];
+            TabItemRemoved?.Invoke(tabItem);
+            LayoutChanged();
         }
 
         /// <summary>
@@ -343,7 +330,7 @@ namespace ThingLing.Controls
                         child.Visibility = Visibility.Collapsed;
                     }
 
-                    var tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
+                    tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
                     ((TabItemHeader)HeaderPanel.Children[tabIndex]).Background = tabItem.BackgroundWhenFocused;
                     ((TabItemHeader)HeaderPanel.Children[tabIndex]).Foreground = tabItem.ForegroundWhenFocused;
                     var element = (TabItemHeader)HeaderPanel.Children[tabIndex];
@@ -372,8 +359,7 @@ namespace ThingLing.Controls
             switch (TabItemsCount)
             {
                 case 0:
-                    if (AlwaysVisible) Visibility = Visibility.Visible;
-                    else Visibility = Visibility.Collapsed; ;
+                    Visibility = AlwaysVisible ? Visibility.Visible : Visibility.Collapsed; ;
 
                     if (ParentPanel != null && TabControlParent != null)
                         ParentPanel.Children.Remove(TabControlParent);
@@ -393,7 +379,6 @@ namespace ThingLing.Controls
                             TabStrip.Visibility = Visibility.Collapsed;
                         }
                     }
-
                     break;
                 default:
                     if (ContentPanel.Children.Count > 1)
@@ -402,7 +387,6 @@ namespace ThingLing.Controls
                         SeparatorBorder.Visibility = Visibility.Visible;
                         TabStrip.Visibility = Visibility.Visible;
                     }
-
                     break;
             }
             TabItemsCount = ContentPanel.Children.Count;

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!--<TargetFramework>net5.0-windows</TargetFramework>-->
-    <TargetFrameworks>net6.0-windows;net452</TargetFrameworks>
+    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <RootNamespace>ThingLing.Controls</RootNamespace>
     <AssemblyName>ThingLing.Controls.DockControl</AssemblyName>

@@ -7,8 +7,6 @@ using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using System;
-using System.Diagnostics;
-using ThingLing.Avalonia.Controls;
 using ThingLing.Controls.Methods;
 using ThingLing.Controls.Props;
 

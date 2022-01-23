@@ -43,41 +43,37 @@ namespace ThingLing.Controls
         {
             MenuButton.ContextMenu = TabControl.DockingContextMenu;
             HideButton.ContextMenu = TabControl.HideContextMenu;
-            this.BringIntoView(new Rect(new Size(this.Width, this.Height)));
+            this.BringIntoView(new Rect(new Size(this.Bounds.Width, this.Bounds.Height)));
         }
 
         private void Border_PointerEnter(object sender, PointerEventArgs e)
         {
-            ((Border)sender).BorderBrush = Brushes.White;
+            ((Border) sender).BorderBrush = Brushes.White;
         }
 
         private void Border_PointerLeave(object sender, PointerEventArgs e)
         {
-            ((Border)sender).BorderBrush = Brushes.Transparent;
+            ((Border) sender).BorderBrush = Brushes.Transparent;
         }
 
         private void Close()
         {
             TabControl parent;
-            int tabIndex;
             TabItem tabItem;
 
             if ((Parent as Panel)?.Parent.GetType() == typeof(TabItemBody))
             {
-                var panelParent = ((Panel)Parent).Parent as TabItemBody;
-                parent = (TabControl)((Panel)((Panel)((TabItemBody)((Panel)Parent).Parent).Parent).Parent).Parent;
-                tabIndex = parent.ContentPanel.Children.IndexOf(panelParent);
+                var panelParent = ((Panel) Parent).Parent as TabItemBody;
+                parent = (TabControl) ((Panel) ((Panel) ((TabItemBody) ((Panel) Parent).Parent).Parent).Parent).Parent;
                 tabItem = parent.TabItems!.FirstOrDefault(i => i.TabItemBody().ContentPanel.Child == panelParent?.ContentPanel.Child);
             }
             else
             {
-                parent = (TabControl)((Panel)((Panel)((ScrollViewer)((Panel)Parent).Parent).Parent).Parent).Parent;
-                tabIndex = parent.HeaderPanel.Children.IndexOf(this);
-                tabItem = parent.TabItems!.FirstOrDefault(i => i.TabItemHeader() == this);
+                parent = (TabControl) ((Panel) ((Panel) ((ScrollViewer) ((Panel) Parent).Parent).Parent).Parent).Parent;
+                tabItem = parent.TabItems!.FirstOrDefault(i => Equals(i.TabItemHeader(), this));
             }
 
             parent.Remove(tabItem);
-
             parent.LayoutChanged();
 
             if (parent.ContentPanel.Children.Count < 1)
@@ -85,12 +81,13 @@ namespace ThingLing.Controls
                 parent.tabIndex = -1;
                 return;
             }
+
             var nextTabIndex = parent.HeaderPanel.Children.IndexOf(parent.TabItems[0].TabItemHeader());
 
-            ((TabItemHeader)parent.HeaderPanel.Children[nextTabIndex]).Background = tabItem?.BackgroundWhenFocused;
-            ((TabItemHeader)parent.HeaderPanel.Children[nextTabIndex]).Foreground = tabItem?.ForegroundWhenFocused;
+            ((TabItemHeader) parent.HeaderPanel.Children[nextTabIndex]).Background = tabItem?.BackgroundWhenFocused;
+            ((TabItemHeader) parent.HeaderPanel.Children[nextTabIndex]).Foreground = tabItem?.ForegroundWhenFocused;
 
-            var element = (TabItemHeader)parent.HeaderPanel.Children[nextTabIndex];
+            var element = (TabItemHeader) parent.HeaderPanel.Children[nextTabIndex];
 
             element.BringIntoView(new Rect(new Size(element.Width, element.Height)));
 
@@ -108,7 +105,7 @@ namespace ThingLing.Controls
 
         private void ContextMenuButton_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
-            var contextMenu = ((Border)sender).ContextMenu;
+            var contextMenu = ((Border) sender).ContextMenu;
             if (contextMenu != null) contextMenu.Open();
             // Prevent the event from bubbling up to the parent
             e.Handled = true;

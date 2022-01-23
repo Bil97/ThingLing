@@ -45,7 +45,7 @@ namespace ThingLing.Controls
             else
             {
                 parent = (TabControl)((Panel)((Panel)((ScrollViewer)((Panel)Parent).Parent).Parent).Parent).Parent;
-                tabItem = parent.TabItems!.FirstOrDefault(i => i.TabItemHeader() == this);
+                tabItem = parent.TabItems!.FirstOrDefault(i => Equals(i.TabItemHeader(), this));
             }
 
             parent.Remove(tabItem);
