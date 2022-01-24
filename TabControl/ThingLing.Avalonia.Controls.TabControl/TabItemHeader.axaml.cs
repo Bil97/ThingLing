@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using System;
 using System.Linq;
+using Avalonia.Threading;
 
 namespace ThingLing.Controls
 {
@@ -15,6 +16,10 @@ namespace ThingLing.Controls
             InitializeComponent();
 
             Initialized += TabItemHeader_Initialized;
+            AttachedToVisualTree += (s, e) =>
+            {
+                Dispatcher.UIThread.Post(this.BringIntoView, DispatcherPriority.Background);
+            };
         }
 
         #region Controls
@@ -43,7 +48,6 @@ namespace ThingLing.Controls
         {
             MenuButton.ContextMenu = TabControl.DockingContextMenu;
             HideButton.ContextMenu = TabControl.HideContextMenu;
-            this.BringIntoView(new Rect(new Size(this.Bounds.Width, this.Bounds.Height)));
         }
 
         private void Border_PointerEnter(object sender, PointerEventArgs e)
@@ -65,7 +69,8 @@ namespace ThingLing.Controls
             {
                 var panelParent = ((Panel) Parent).Parent as TabItemBody;
                 parent = (TabControl) ((Panel) ((Panel) ((TabItemBody) ((Panel) Parent).Parent).Parent).Parent).Parent;
-                tabItem = parent.TabItems!.FirstOrDefault(i => i.TabItemBody().ContentPanel.Child == panelParent?.ContentPanel.Child);
+                tabItem = parent.TabItems!.FirstOrDefault(i =>
+                    i.TabItemBody().ContentPanel.Child == panelParent?.ContentPanel.Child);
             }
             else
             {
