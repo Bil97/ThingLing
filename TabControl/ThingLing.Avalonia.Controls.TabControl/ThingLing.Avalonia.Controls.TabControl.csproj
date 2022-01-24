@@ -19,7 +19,8 @@
     <PackageId>ThingLing.Avalonia.Controls.TabControl</PackageId>
     <PackageProjectUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</RepositoryUrl>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Images\*" />
@@ -31,6 +32,10 @@
     <None Include="..\..\LICENSE.TXT">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\ReadMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>
