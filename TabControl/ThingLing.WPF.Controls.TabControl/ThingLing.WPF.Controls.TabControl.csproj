@@ -16,6 +16,7 @@
     <PackageProjectUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</RepositoryUrl>
     <Version>1.0.1</Version>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -31,6 +32,10 @@
     <None Include="..\..\LICENSE.TXT">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\ReadMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
