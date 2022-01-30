@@ -165,8 +165,8 @@ namespace ThingLing.Controls
                 //--</ get Position >-- 
 
                 ////--</ get Offset >-- 
-                var diffX = (posX - mouseX);
-                var diffY = (posY - mouseY);
+                var diffX = posX - mouseX;
+                var diffY = posY - mouseY;
                 if (SizingEdgeType == (int)EdgeTypes.HeaderMove)
                 {
                     //----< sizing Move >---- 
@@ -192,7 +192,7 @@ namespace ThingLing.Controls
                             {
                                 //----< sizing Left >---- 
                                 var newLeft = mouseX;
-                                var newWidth = (SizingPanel.ActualWidth) + diffX;
+                                var newWidth = SizingPanel.ActualWidth + diffX;
                                 //< set Left > 
                                 if (newLeft > 0) Canvas.SetLeft(SizingPanel, newLeft);
                                 //</ set Left > 
@@ -206,7 +206,7 @@ namespace ThingLing.Controls
                             {
                                 //----< sizing Top >---- 
                                 var newTop = mouseY;
-                                var newHeight = (SizingPanel.ActualHeight) + diffY;
+                                var newHeight = SizingPanel.ActualHeight + diffY;
                                 //< set Left > 
                                 if (newTop > 0) Canvas.SetTop(SizingPanel, newTop);
                                 //</ set Left > 

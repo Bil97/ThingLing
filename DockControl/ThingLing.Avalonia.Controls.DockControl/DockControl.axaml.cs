@@ -179,16 +179,16 @@ namespace ThingLing.Controls
                 //--</ get Position >-- 
 
                 ////--</ get Offset >-- 
-                var diffX = (posX - mouseX);
-                var diffY = (posY - mouseY);
+                var diffX = posX - mouseX;
+                var diffY = posY - mouseY;
                 if (SizingEdgeType == (int)EdgeTypes.HeaderMove)
                 {
                     //----< sizing Move >---- 
                     var newLeft = mouseX - SizingOffsetX;
-                    var excessRight = MainPanel.Width - SizingPanel.Width;
+                    var excessRight = MainPanel.Bounds.Width - SizingPanel.Bounds.Width;
                     if (newLeft > excessRight && excessRight > 0) newLeft = excessRight;
                     var newTop = mouseY - SizingOffsetY;
-                    var excessBottom = MainPanel.Height - SizingPanel.Height;
+                    var excessBottom = MainPanel.Bounds.Height - SizingPanel.Bounds.Height;
                     if (newTop > excessBottom && excessBottom > 0) newTop = excessBottom;
                     //< set > 
                     if (newLeft > 0) Canvas.SetLeft(SizingPanel, newLeft);
@@ -206,7 +206,7 @@ namespace ThingLing.Controls
                             {
                                 //----< sizing Left >---- 
                                 var newLeft = mouseX;
-                                var newWidth = (SizingPanel.Width) + diffX;
+                                var newWidth = SizingPanel.Bounds.Width + diffX;
                                 //< set Left > 
                                 if (newLeft > 0) Canvas.SetLeft(SizingPanel, newLeft);
                                 //</ set Left > 
@@ -220,7 +220,7 @@ namespace ThingLing.Controls
                             {
                                 //----< sizing Top >---- 
                                 var newTop = mouseY;
-                                var newHeight = (SizingPanel.Height) + diffY;
+                                var newHeight = SizingPanel.Bounds.Height + diffY;
                                 //< set Left > 
                                 if (newTop > 0) Canvas.SetTop(SizingPanel, newTop);
                                 //</ set Left > 
