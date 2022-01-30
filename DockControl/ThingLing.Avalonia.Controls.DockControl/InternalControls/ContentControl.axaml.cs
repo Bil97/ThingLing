@@ -14,7 +14,6 @@ namespace ThingLing.Controls.InternalControls
             //DocumentWindow = new(ThemeMethods.TabControlTheme());
             //DocumentWindow.;
             ContentPanel!.Children.Add(DocumentWindow);
-
         }
 
         #region Controls

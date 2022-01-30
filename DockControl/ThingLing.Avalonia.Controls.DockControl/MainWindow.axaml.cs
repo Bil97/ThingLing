@@ -7,7 +7,7 @@ namespace ThingLing.Controls
 {
     public partial class MainWindow : Window
     {
-        DockControl win = new DockControl();
+        DockControl win = new DockControl() /*{ Width = 900 }*/;
 
         public MainWindow()
         {
@@ -23,13 +23,13 @@ namespace ThingLing.Controls
 
         #region Controls
 
-        Grid? MainPanel;
+        Panel? MainPanel;
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
 
-            MainPanel = this.FindControl<Grid>(nameof(MainPanel));
-        } 
+            MainPanel = this.FindControl<Panel>(nameof(MainPanel));
+        }
         #endregion
 
         private int _i = 0;

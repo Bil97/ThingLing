@@ -221,7 +221,7 @@ namespace ThingLing.Controls
                     // Do not mess this order
                     TabStripPlacementSide ??= TabStripPlacement.Top;
                     TabStrip_Placement();
-                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double) TabItemRotationAngle);
+                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double)TabItemRotationAngle);
                     HeaderPanel.Children.Insert(tabIndex, tabItem.TabItemHeader());
                     ContentPanel.Children.Insert(tabIndex, tabItem.Content);
                     break;
@@ -229,7 +229,7 @@ namespace ThingLing.Controls
                     // Do not mess this order
                     TabStripPlacementSide ??= TabStripPlacement.Bottom;
                     TabStrip_Placement();
-                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double) TabItemRotationAngle);
+                    tabItem.TabItemHeader().RenderTransform = new RotateTransform((double)TabItemRotationAngle);
                     tabItem.TabItemHeader().CloseButton.IsVisible = false;
                     ;
                     HeaderPanel.Children.Insert(tabIndex, tabItem.TabItemHeader());
@@ -268,8 +268,8 @@ namespace ThingLing.Controls
         {
             foreach (var child in HeaderPanel.Children)
             {
-                ((TabItemHeader) child).Background = tabItem.BackgroundWhenUnFocused;
-                ((TabItemHeader) child).Foreground = tabItem.ForegroundWhenUnFocused;
+                ((TabItemHeader)child).Background = tabItem.BackgroundWhenUnFocused;
+                ((TabItemHeader)child).Foreground = tabItem.ForegroundWhenUnFocused;
             }
 
             foreach (Control child in ContentPanel.Children)
@@ -280,7 +280,7 @@ namespace ThingLing.Controls
 
             tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
 
-            var element = (TabItemHeader) HeaderPanel.Children[tabIndex];
+            var element = (TabItemHeader)HeaderPanel.Children[tabIndex];
             element.Background = tabItem.BackgroundWhenFocused;
             element.Foreground = tabItem.ForegroundWhenFocused;
             ContentPanel.Children[tabIndex].IsVisible = true;
@@ -355,8 +355,8 @@ namespace ThingLing.Controls
                 {
                     foreach (var child in HeaderPanel.Children)
                     {
-                        ((TabItemHeader) child).Background = tabItem.BackgroundWhenUnFocused;
-                        ((TabItemHeader) child).Foreground = tabItem.ForegroundWhenUnFocused;
+                        ((TabItemHeader)child).Background = tabItem.BackgroundWhenUnFocused;
+                        ((TabItemHeader)child).Foreground = tabItem.ForegroundWhenUnFocused;
                     }
 
                     foreach (var child in ContentPanel.Children)
@@ -365,9 +365,9 @@ namespace ThingLing.Controls
                     }
 
                     tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
-                    ((TabItemHeader) HeaderPanel.Children[tabIndex]).Background = tabItem.BackgroundWhenFocused;
-                    ((TabItemHeader) HeaderPanel.Children[tabIndex]).Foreground = tabItem.ForegroundWhenFocused;
-                    var element = (TabItemHeader) HeaderPanel.Children[tabIndex];
+                    ((TabItemHeader)HeaderPanel.Children[tabIndex]).Background = tabItem.BackgroundWhenFocused;
+                    ((TabItemHeader)HeaderPanel.Children[tabIndex]).Foreground = tabItem.ForegroundWhenFocused;
+                    var element = (TabItemHeader)HeaderPanel.Children[tabIndex];
 
                     element.BringIntoView(new Rect(new Size(element.Bounds.Width, element.Bounds.Height)));
 
@@ -380,8 +380,8 @@ namespace ThingLing.Controls
                 menuItems.Add(menuItem);
             }
 
-            var contextMenu = new ContextMenu {Items = menuItems};
-            ((Image) sender).ContextMenu = contextMenu;
+            var contextMenu = new ContextMenu { Items = menuItems };
+            ((Image)sender).ContextMenu = contextMenu;
 
             contextMenu.Open();
             e.Handled = true;
