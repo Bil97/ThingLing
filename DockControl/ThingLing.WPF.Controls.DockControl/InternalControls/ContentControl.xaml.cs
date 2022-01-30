@@ -1,7 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ThingLing.Controls.Methods;
-using TabItem = ThingLing.Controls;
 namespace ThingLing.Controls.InternalControls
 {
     /// <summary>

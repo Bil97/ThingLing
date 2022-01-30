@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ThingLing.Controls;
 
 namespace WpfTestApp2
 {
