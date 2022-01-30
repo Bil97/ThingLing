@@ -13,9 +13,6 @@ namespace ThingLing.Controls
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
             Window = this;
 
             tab = this.FindControl<TabControl>("tab");

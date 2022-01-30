@@ -41,7 +41,6 @@
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.10" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.10" />
     <PackageReference Include="ThingLing.Avalonia.Controls.MessageBox" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
