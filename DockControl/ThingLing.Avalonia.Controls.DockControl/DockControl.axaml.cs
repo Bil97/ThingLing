@@ -16,20 +16,20 @@ namespace ThingLing.Controls
         internal readonly List<string> FloatingWindows = new();
         internal int currentZIndex = 1;
         internal static Theme? Theme { get; set; }
+        ThemeMethods themeMethods = new();
 
         public DockControl()
         {
-            InitializeComponent();
-            var themeMethods = new ThemeMethods();
             themeMethods.LoadTheme();
+
+            InitializeComponent();
         }
 
         public DockControl(Theme theme)
         {
-            InitializeComponent();
-            var themeMethods = new ThemeMethods();
             themeMethods.LoadTheme(theme);
 
+            InitializeComponent();
         }
 
         #region Controls

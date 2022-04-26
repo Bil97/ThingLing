@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using ThingLing.Controls.Methods;
 
 namespace ThingLing.Controls.InternalControls
 {
@@ -11,9 +12,11 @@ namespace ThingLing.Controls.InternalControls
             InitializeComponent();
 
             DocumentWindow = new();
-            //DocumentWindow = new(ThemeMethods.TabControlTheme());
-            //DocumentWindow.;
-            ContentPanel!.Children.Add(DocumentWindow);
+            DocumentWindow.HideNewTabButton = true;
+            DocumentWindow.TabControlAlwaysVisible = false;
+            DocumentWindow.TabControlButtonsAlwaysVisible = false;
+            DocumentWindow.Theme = ThemeMethods.TabControlTheme();
+            ContentPanel.Children.Add(DocumentWindow);
         }
 
         #region Controls

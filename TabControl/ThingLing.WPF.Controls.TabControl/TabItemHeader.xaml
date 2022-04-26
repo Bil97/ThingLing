@@ -33,7 +33,7 @@
                 MouseLeftButtonUp="ContextMenuButton_MouseLeftButtonUp"
                 MouseEnter="Border_MouseEnter"
                 MouseLeave="Border_MouseLeave">
-            <Image Source="Images/minimize.png" Style="{StaticResource headerImage}" />
+            <Image Source="Images/auto_hide.png" Style="{StaticResource headerImage}" />
         </Border>
         <Border x:Name="MenuButton" x:FieldModifier="public"
                 Style="{StaticResource headerBorder}"

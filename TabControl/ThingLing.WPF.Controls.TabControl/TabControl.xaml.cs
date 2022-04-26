@@ -96,12 +96,16 @@ namespace ThingLing.Controls
         internal int tabIndex = -1;
         private TabItem _selectedTabItem;
         private TabControlTheme _theme;
-        
+
         /// <summary>
         /// Determines whether to collapse this TabControl's visibility when it has no TabItem
-        /// and also whether keep showing the NewTabButton Button and the OpenTabs button when this TabControl has one or no child
         /// </summary>
-        public bool AlwaysVisible { get; set; } = true;
+        public bool TabControlAlwaysVisible { get; set; } = true;
+
+        /// <summary>
+        /// Determines whether to r keep showing the NewTabButton Button and the OpenTabs button when this TabControl has only one child
+        /// </summary>
+        public bool TabControlButtonsAlwaysVisible { get; set; } = true;
 
         /// <summary>
         /// Determines whether to collapse the AddItem Buttons
@@ -118,11 +122,11 @@ namespace ThingLing.Controls
         {
             InitializeComponent();
             this.Loaded += TabControl_Loaded;
-            if (Theme == null) _ = new LoadTheme();
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Theme == null) _ = new LoadTheme();
             SeparatorBorder.BorderBrush = CurrentTheme.SeparatorBorderBrush;
             this.Background = CurrentTheme.TabControlBackground;
             NewTabItem.Visibility = HideNewTabButton ? Visibility.Collapsed : Visibility.Visible;
@@ -359,7 +363,7 @@ namespace ThingLing.Controls
             switch (TabItemsCount)
             {
                 case 0:
-                    Visibility = AlwaysVisible ? Visibility.Visible : Visibility.Collapsed; ;
+                    Visibility = TabControlAlwaysVisible ? Visibility.Visible : Visibility.Collapsed;
 
                     if (ParentPanel != null && TabControlParent != null)
                         ParentPanel.Children.Remove(TabControlParent);
@@ -368,7 +372,7 @@ namespace ThingLing.Controls
                     Visibility = Visibility.Visible;
                     if (TabMode == TabMode.Window)
                     {
-                        if (AlwaysVisible)
+                        if (TabControlButtonsAlwaysVisible)
                         {
                             SeparatorBorder.Visibility = Visibility.Visible; ;
                             TabStrip.Visibility = Visibility.Visible;

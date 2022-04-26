@@ -37,7 +37,7 @@
             PointerEnter="Border_PointerEnter"
             PointerLeave="Border_PointerLeave"
             PointerReleased="ContextMenuButton_PointerReleased">
-      <Image Source="avares://ThingLing.Controls.TabControl/Images/dock_menu.png"
+      <Image Source="avares://ThingLing.Controls.TabControl/Images/menu.png"
               Classes="header"/>
     </Border>
 

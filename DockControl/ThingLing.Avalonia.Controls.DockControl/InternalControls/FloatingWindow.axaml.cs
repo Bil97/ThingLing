@@ -46,7 +46,8 @@ namespace ThingLing.Controls.InternalControls
                 TabMode = TabMode.Window,
                 TabControlParent = this,
                 ParentPanel = _dockControl.MainPanel,
-                Theme = ThemeMethods.TabControlTheme()
+                Theme = ThemeMethods.TabControlTheme(),
+                HideNewTabButton = true,
             };
 
             TabControl.DockingContextMenu = dockingContextMenu;

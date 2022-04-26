@@ -103,9 +103,13 @@ namespace ThingLing.Controls
 
         /// <summary>
         /// Determines whether to collapse this TabControl's visibility when it has no TabItem
-        /// and also whether keep showing the NewTabButton Button and the OpenTabs button when this TabControl has one or no child
         /// </summary>
-        public bool AlwaysVisible { get; set; } = true;
+        public bool TabControlAlwaysVisible { get; set; } = true;
+
+        /// <summary>
+        /// Determines whether to r keep showing the NewTabButton Button and the OpenTabs button when this TabControl has only one child
+        /// </summary>
+        public bool TabControlButtonsAlwaysVisible { get; set; } = true;
 
         /// <summary>
         /// Determines whether to collapse the AddItem Button
@@ -123,7 +127,6 @@ namespace ThingLing.Controls
         {
             InitializeComponent();
             Initialized += TabControl_Initialized;
-            if (Theme == null) _ = new LoadTheme();
         }
 
         #region Controls
@@ -151,6 +154,7 @@ namespace ThingLing.Controls
 
         private void TabControl_Initialized(object sender, EventArgs e)
         {
+            if (Theme == null) _ = new LoadTheme();
             SeparatorBorder.BorderBrush = CurrentTheme.SeparatorBorderBrush;
             this.Background = CurrentTheme.TabControlBackground;
             NewTabItem.IsVisible = !HideNewTabButton;
@@ -395,7 +399,7 @@ namespace ThingLing.Controls
             switch (TabItemsCount)
             {
                 case 0:
-                    IsVisible = AlwaysVisible;
+                    IsVisible = TabControlAlwaysVisible;
 
                     if (ParentPanel != null && TabControlParent != null)
                         ParentPanel.Children.Remove(TabControlParent);
@@ -404,7 +408,7 @@ namespace ThingLing.Controls
                     IsVisible = true;
                     if (TabMode == TabMode.Window)
                     {
-                        if (AlwaysVisible)
+                        if (TabControlButtonsAlwaysVisible)
                         {
                             SeparatorBorder.IsVisible = true;
                             TabStrip.IsVisible = true;

@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using ThingLing.Controls.Methods;
+
 namespace ThingLing.Controls.InternalControls
 {
     /// <summary>
@@ -13,8 +15,10 @@ namespace ThingLing.Controls.InternalControls
             InitializeComponent();
 
             DocumentWindow = new();
-            //DocumentWindow.Theme = ThemeMethods.TabControlTheme();
-            //DocumentWindow.;
+            DocumentWindow.HideNewTabButton = true;
+            DocumentWindow.TabControlAlwaysVisible = false;
+            DocumentWindow.TabControlButtonsAlwaysVisible = false;
+            DocumentWindow.Theme = ThemeMethods.TabControlTheme();
             ContentPanel.Children.Add(DocumentWindow);
         }
 

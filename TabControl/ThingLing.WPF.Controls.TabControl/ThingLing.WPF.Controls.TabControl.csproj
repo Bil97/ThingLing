@@ -28,6 +28,7 @@
     <None Remove="Images\auto_hide.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\dock_menu.png" />
+    <None Remove="Images\menu.png" />
     <None Remove="Images\plus.png" />
     <None Include="..\..\LICENSE.TXT">
       <Pack>True</Pack>
