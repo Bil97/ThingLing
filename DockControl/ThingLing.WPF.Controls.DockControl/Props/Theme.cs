@@ -57,6 +57,11 @@ namespace ThingLing.Controls.Props
         public Brush SeparatorBorder { get; set; }
 
         /// <summary>
+        /// Holds the default font color of the TabControl background
+        /// </summary>
+        public Brush TabControlBackground { get; set; }
+
+        /// <summary>
         /// Holds the default background color of the TabItem Body 
         /// </summary>
         public Brush TabItemBodyBackground { get; set; }

@@ -21,6 +21,7 @@ namespace ThingLing.Controls.Methods
                 CurrentTheme.UnFocusedTabItemBackground = new SolidColorBrush(Colors.CadetBlue);
                 CurrentTheme.UnFocusedTabItemForeground = new SolidColorBrush(Colors.BurlyWood);
                 CurrentTheme.SeparatorBorder = new SolidColorBrush(Colors.Teal);
+                CurrentTheme.TabControlBackground = new SolidColorBrush(Colors.LightBlue);
                 CurrentTheme.TabItemBodyBackground = new SolidColorBrush(Colors.SeaGreen);
                 CurrentTheme.TabItemBodyForeground = new SolidColorBrush(Colors.PeachPuff);
             }
@@ -38,6 +39,7 @@ namespace ThingLing.Controls.Methods
                 CurrentTheme.UnFocusedTabItemBackground = theme.UnFocusedTabItemBackground;
                 CurrentTheme.UnFocusedTabItemForeground = theme.UnFocusedTabItemForeground;
                 CurrentTheme.SeparatorBorder = theme.SeparatorBorder;
+                CurrentTheme.TabControlBackground = theme.TabControlBackground;
                 CurrentTheme.TabItemBodyBackground = theme.TabItemBodyBackground;
                 CurrentTheme.TabItemBodyForeground = theme.TabItemBodyForeground;
             }
@@ -48,6 +50,7 @@ namespace ThingLing.Controls.Methods
             var tabControlTheme = new TabControlTheme()
             {
                 SeparatorBorder = CurrentTheme.SeparatorBorder,
+                TabControlBackground = CurrentTheme.TabControlBackground,
                 TabItemBodyBackground = CurrentTheme.TabItemBodyBackground,
                 TabItemBodyForeground = CurrentTheme.TabItemBodyForeground,
                 FocusedTabItemBackground = CurrentTheme.FocusedTabItemBackground,

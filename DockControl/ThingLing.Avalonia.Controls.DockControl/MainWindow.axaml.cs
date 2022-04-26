@@ -15,10 +15,6 @@ namespace ThingLing.Controls
 
             win.AddDocument("Text Window13", "th path 132", new TextBox());
             MainPanel.Children.Add(win);
-
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         #region Controls
