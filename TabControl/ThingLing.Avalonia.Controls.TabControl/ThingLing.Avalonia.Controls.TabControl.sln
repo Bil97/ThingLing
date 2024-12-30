@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingLing.Avalonia.Controls.TabControl", "ThingLing.Avalonia.Controls.TabControl.csproj", "{CB77A3E1-EA18-4E71-B911-D489F594F526}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB77A3E1-EA18-4E71-B911-D489F594F526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB77A3E1-EA18-4E71-B911-D489F594F526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB77A3E1-EA18-4E71-B911-D489F594F526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB77A3E1-EA18-4E71-B911-D489F594F526}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61E6D219-0FB6-461C-8C86-1D2295CB0028}
+	EndGlobalSection
+EndGlobal

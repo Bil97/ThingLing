@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>annotations</Nullable>
     <RootNamespace>ThingLing.Controls</RootNamespace>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -14,12 +14,12 @@
     <Company>ThingLing</Company>
     <Description>Tabcontrol for avalonia</Description>
     <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>2.0.1</AssemblyVersion>
+    <FileVersion>2.0.1</FileVersion>
     <PackageId>ThingLing.Avalonia.Controls.TabControl</PackageId>
     <PackageProjectUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Bil97/ThingLing/tree/main/TabControl</RepositoryUrl>
-    <Version>1.0.2</Version>
+    <Version>2.0.1</Version>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
@@ -40,9 +40,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.10" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
-    <PackageReference Include="ThingLing.Avalonia.Controls.MessageBox" Version="2.0.0" />
+    <PackageReference Include="Avalonia" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.2" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.2" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\dock_menu.png" />

@@ -48,7 +48,7 @@ TabStripPlacementSide
 TabItemRotationAngle
 TabItemsCount
 SelectedTabItem
-Theme
+TabTheme (set the colors of the TabControl elements using TabControlTheme class available in the namespace ThingLing.Controls.Props then pass it as a value of the TabTheme constructor)
 CollapseVisibilityWhenEmpty
 AlwaysVisible
 HideNewTabButton

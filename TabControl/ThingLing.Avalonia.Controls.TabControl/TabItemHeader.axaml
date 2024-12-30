@@ -17,8 +17,8 @@
     <Border x:Name="CloseButton" 
             Classes="header" DockPanel.Dock="Right"
             ToolTip.Tip="Close"
-            PointerEnter="Border_PointerEnter"
-            PointerLeave="Border_PointerLeave"
+            PointerEntered="Border_PointerEntered"
+            PointerExited="Border_PointerExited"
             PointerReleased="CloseWindow_PointerReleased">
       <Image Source="avares://ThingLing.Controls.TabControl/Images/close.png" 
              Classes="header"/>
@@ -26,16 +26,16 @@
     <Border x:Name="HideButton" Classes="header" DockPanel.Dock="Right"
             ToolTip.Tip="Hide" IsVisible="false"
             PointerReleased="ContextMenuButton_PointerReleased"
-            PointerEnter="Border_PointerEnter"
-            PointerLeave="Border_PointerLeave" >
+            PointerEntered="Border_PointerEntered"
+            PointerExited="Border_PointerExited" >
       <Image Source="avares://ThingLing.Controls.TabControl/Images/auto_hide.png" 
              Classes="header" />
     </Border>
     <Border x:Name="MenuButton"
             Classes="header" DockPanel.Dock="Right"
             ToolTip.Tip="Menu" IsVisible="false"
-            PointerEnter="Border_PointerEnter"
-            PointerLeave="Border_PointerLeave"
+            PointerEntered="Border_PointerEntered"
+            PointerExited="Border_PointerExited"
             PointerReleased="ContextMenuButton_PointerReleased">
       <Image Source="avares://ThingLing.Controls.TabControl/Images/menu.png"
               Classes="header"/>

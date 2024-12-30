@@ -6,27 +6,19 @@ using Avalonia.Media;
 
 namespace ThingLing.Controls
 {
-    public class MainWindow : Window
+    public partial class MainWindow : Window
     {
-        private TabControl tab;
-        public static MainWindow Window { get; set; }
+        //public static MainWindow Window { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            Window = this;
-
-            tab = this.FindControl<TabControl>("tab");
+            // Window = this;
             tab.NewTabItemButtonClicked+= NewTabItemButton_Clicked;
         }
 
         private void NewTabItemButton_Clicked()
         {
             Click();
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
         }
 
         private int _i;

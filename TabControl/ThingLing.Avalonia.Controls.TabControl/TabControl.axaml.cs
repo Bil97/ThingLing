@@ -6,6 +6,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ThingLing.Controls.Methods;
 using ThingLing.Controls.Props;
@@ -76,7 +77,7 @@ namespace ThingLing.Controls
         /// Provides the colors used to decorate the this TabControl
         /// </summary>
 
-        public TabControlTheme Theme
+        public TabControlTheme TabTheme
         {
             get => _theme;
             set
@@ -121,6 +122,11 @@ namespace ThingLing.Controls
         /// </summary>
         public bool HideOpenTabsButton { get; set; }
 
+        /// <summary>
+        /// Stores the the index of a tab is active
+        /// </summary>
+        private int IndexOfTab { get; set; } = 0;
+
         #endregion Properties
 
         public TabControl()
@@ -131,30 +137,12 @@ namespace ThingLing.Controls
 
         #region Controls
 
-        internal DockPanel TabStrip;
-        internal Image DocMenu;
-        internal Image NewTabItem;
-        internal StackPanel HeaderPanel;
-        internal Border SeparatorBorder;
-        internal Grid ContentPanel;
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-
-            TabStrip = this.FindControl<DockPanel>(nameof(TabStrip));
-            DocMenu = this.FindControl<Image>(nameof(DocMenu));
-            NewTabItem = this.FindControl<Image>(nameof(NewTabItem));
-            HeaderPanel = this.FindControl<StackPanel>(nameof(HeaderPanel));
-            SeparatorBorder = this.FindControl<Border>(nameof(SeparatorBorder));
-            ContentPanel = this.FindControl<Grid>(nameof(ContentPanel));
-        }
-
         #endregion Controls
 
         private void TabControl_Initialized(object sender, EventArgs e)
         {
-            if (Theme == null) _ = new LoadTheme();
+            if (TabTheme == null) _ = new LoadTheme();
+
             SeparatorBorder.BorderBrush = CurrentTheme.SeparatorBorderBrush;
             this.Background = CurrentTheme.TabControlBackground;
             NewTabItem.IsVisible = !HideNewTabButton;
@@ -233,7 +221,7 @@ namespace ThingLing.Controls
                     TabStripPlacementSide ??= TabStripPlacement.Bottom;
                     TabStrip_Placement();
                     tabItem.TabItemHeader().RenderTransform = new RotateTransform((double)TabItemRotationAngle);
-                    tabItem.TabItemHeader().CloseButton.IsVisible = false;
+                    //tabItem.TabItemHeader().CloseButton.IsVisible = false;
                     ;
                     HeaderPanel.Children.Insert(tabIndex, tabItem.TabItemHeader());
                     tabItem.TabItemBody().ContentPanel.Child = tabItem.Content;
@@ -269,25 +257,33 @@ namespace ThingLing.Controls
         /// <param name="tabItem">The TabItem to set focus on</param>
         private void FocusThisTabItem(TabItem tabItem)
         {
-            foreach (var child in HeaderPanel.Children)
-            {
-                ((TabItemHeader)child).Background = tabItem.BackgroundWhenUnFocused;
-                ((TabItemHeader)child).Foreground = tabItem.ForegroundWhenUnFocused;
-            }
-
-            foreach (Control child in ContentPanel.Children)
-            {
-                if (child != null)
-                    child.IsVisible = false;
-            }
-
             tabIndex = HeaderPanel.Children.IndexOf(tabItem.TabItemHeader());
 
-            var element = (TabItemHeader)HeaderPanel.Children[tabIndex];
-            element.Background = tabItem.BackgroundWhenFocused;
-            element.Foreground = tabItem.ForegroundWhenFocused;
-            ContentPanel.Children[tabIndex].IsVisible = true;
-            element.BringIntoView(new Rect(new Size(element.Bounds.Width, element.Bounds.Height)));
+            if (IndexOfTab != tabIndex)
+            {
+                IndexOfTab = tabIndex;
+
+                foreach (var child in HeaderPanel.Children)
+                {
+                    ((TabItemHeader)child).Background = tabItem.BackgroundWhenUnFocused;
+                    ((TabItemHeader)child).Foreground = tabItem.ForegroundWhenUnFocused;
+                }
+
+                foreach (Control child in ContentPanel.Children)
+                {
+                    if (child != null)
+                        child.IsVisible = false;
+                }
+
+
+                var element = (TabItemHeader)HeaderPanel.Children[tabIndex];
+                element.Background = tabItem.BackgroundWhenFocused;
+                element.Foreground = tabItem.ForegroundWhenFocused;
+                ContentPanel.Children[tabIndex].IsVisible = true;
+                ContentPanel.Children[tabIndex].Focus();
+
+                element.BringIntoView(new Rect(new Size(element.Bounds.Width, element.Bounds.Height)));
+            }
         }
 
         /// <summary>
@@ -383,7 +379,7 @@ namespace ThingLing.Controls
                 menuItems.Add(menuItem);
             }
 
-            var contextMenu = new ContextMenu { Items = menuItems };
+            var contextMenu = new ContextMenu { ItemsSource = menuItems };
             ((Image)sender).ContextMenu = contextMenu;
 
             contextMenu.Open();
